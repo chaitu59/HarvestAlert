@@ -2,278 +2,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#174c36">
-<title>HarvestAlert AI | Smart Farming</title>
-<style>
-:root{--g:#174c36;--lime:#c8ef83;--bg:#f4f5eb;--card:#fff;--ink:#20372a;--muted:#68776b;--line:#dfe6d9;--red:#b83b31;--amber:#9a6815}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px Arial,sans-serif}
-header{background:var(--g);color:#fff;padding:18px 16px 28px;border-radius:0 0 24px 24px}
-nav,.hero,main,footer{max-width:960px;margin:auto}
-nav{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.brand{font-size:21px;font-weight:800}
-.logo{background:var(--lime);color:var(--g);padding:8px;border-radius:10px;margin-right:7px}
-button,input,select{font:inherit}
-button{cursor:pointer}
-button:disabled{opacity:.5;cursor:wait}
-.lang,.navbtn{border:1px solid #779886;background:transparent;color:white;border-radius:10px;padding:9px}
-.hero{padding-top:27px}
-.kicker{color:var(--lime);font-size:11px;font-weight:bold;letter-spacing:1.5px}
-h1{font-size:clamp(30px,6vw,45px);line-height:1.08;margin:10px 0}
-.hero p{color:#dce8df;line-height:1.55;max-width:650px}
-main{padding:14px}
-.search{display:flex;gap:8px}
-input,select{width:100%;min-width:0;padding:11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
-.btn{background:var(--g);color:white;border:0;border-radius:10px;padding:12px 15px;font-weight:bold}
-.btn2{background:#eaf2e5;color:var(--g);border:1px solid #d4e2ce;border-radius:10px;padding:10px 12px;font-weight:bold}
-.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:17px;margin:13px 0;box-shadow:0 4px 14px #174c3608}
-h2{font-size:19px;margin:0 0 7px}
-h3{font-size:16px;margin:12px 0 6px}
-.sub,.note{color:var(--muted);font-size:13px;line-height:1.55}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
-.field{min-width:0}.field label{display:block;font-size:12px;font-weight:bold;color:#4d6352;margin-bottom:6px}
-.wide{grid-column:1/-1}
-.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}
-.metric{background:#eff5e9;padding:11px;border-radius:12px;min-width:0}
-.metric small{display:block;color:var(--muted);font-size:10px}
-.metric strong{display:block;font-size:22px;margin:6px 0;overflow-wrap:anywhere}
-.pill{display:inline-block;padding:5px 9px;border-radius:20px;background:#e7f1df;font-size:11px;font-weight:bold}
-.result{padding:13px;border-radius:12px;background:#edf5e8;margin-top:12px;line-height:1.6;overflow-wrap:anywhere}
-.warn{background:#fff1d8}.bad{background:#fce9e5}
-.days{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.day{border:1px solid var(--line);border-radius:12px;padding:11px}
-.day small{color:var(--muted)}.day .icon{font-size:25px;margin:7px 0}
-.preview{max-width:100%;max-height:240px;object-fit:contain;border-radius:12px;margin-top:10px}
-a{color:#176b47;overflow-wrap:anywhere}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-.status{font-size:13px;color:var(--muted);margin-top:9px}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
-hr{border:0;border-top:1px solid var(--line);margin:14px 0}
-@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.days{grid-template-columns:repeat(4,minmax(0,1fr))}.card{padding:21px}}
-@media(max-width:350px){.metrics{grid-template-columns:1fr}.search{flex-direction:column}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HarvestAlert | Farm Intelligence</title>
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<header>
-<nav>
-<div class="brand"><span class="logo">🌾</span>HarvestAlert AI</div>
-<button class="lang" id="langBtn" onclick="toggleLang()">मराठी</button>
-</nav>
-<div class="hero">
-<div class="kicker">SMART FARMING · BETTER DECISIONS</div>
-<h1>Protect your crop.<br>Plan your harvest.</h1>
-<p>Weather insights, crop-health screening, harvest planning and farmer resources in one place.</p>
-</div>
-</header>
+  <aside class="sidebar">
+    <a class="brand" href="index.html">🌾 Harvest<span>Alert</span></a>
+    <p class="nav-label">FARM WORKSPACE</p>
+    <nav>
+      <a class="active" href="index.html">▦ Dashboard</a>
+      <a href="weather.html">☀ Weather</a>
+      <a href="water-risk.html">◉ Water Risk</a>
+      <a href="harvest.html">▤ Harvest Planner</a>
+      <a href="crop-health.html">✿ Crop Health</a>
+      <a href="soil.html">♧ Soil Advisor</a>
+      <a href="market.html">₹ Markets & Schemes</a>
+    </nav>
+    <div class="side-note">
+      <span>🌱</span>
+      <h3>Smarter farming starts here</h3>
+      <p>Use weather, field observations and farm records to plan more confidently.</p>
+    </div>
+    <small class="side-footer">HARVESTALERT · FARM INTELLIGENCE</small>
+  </aside>
 
-<main>
-<section class="card">
-<h2>📍 Local weather intelligence</h2>
-<p class="sub">Enter a village, town or city. Forecast data comes from Open-Meteo.</p>
-<div class="search">
-<input id="place" value="Ahilyanagar, Maharashtra" placeholder="Village or city">
-<button class="btn" id="weatherBtn" onclick="loadWeather()">Get weather</button>
-</div>
-<div class="status" id="weatherStatus" aria-live="polite">Weather has not loaded yet.</div>
-<div id="weatherPanel" hidden>
-<div class="metrics">
-<div class="metric"><small>CURRENT TEMPERATURE</small><strong id="temp">—</strong><small id="condition">—</small></div>
-<div class="metric"><small>7-DAY RAINFALL</small><strong id="rain">—</strong><small>Total forecast</small></div>
-<div class="metric"><small>HUMIDITY</small><strong id="humidity">—</strong><small>Current reading</small></div>
-</div>
-<h3 id="forecastTitle">Forecast</h3><p class="sub" id="forecastPlace"></p>
-<div class="days" id="days"></div>
-</div>
-</section>
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">YOUR FARM WORKSPACE</p>
+        <h1>Dashboard</h1>
+        <p class="muted">A smarter way to plan your farming decisions.</p>
+      </div>
+      <span class="status">● Planning workspace</span>
+    </header>
 
-<section class="card">
-<h2>💧 Water and drought-risk check</h2>
-<p class="sub">This is a simple screening estimate, not an official drought warning.</p>
-<div class="grid">
-<div class="field"><label>Water source</label><select id="source"><option>Well / borewell</option><option>Dam / reservoir</option><option>Canal</option><option>Rain-fed only</option><option>Other</option></select></div>
-<div class="field"><label>Available water</label><select id="water"><option value="0">Good</option><option value="12" selected>Limited</option><option value="25">Very low</option></select></div>
-<div class="field"><label>Soil moisture</label><select id="moisture"><option value="0">Wet</option><option value="5" selected>Normal</option><option value="15">Dry</option><option value="25">Very dry</option></select></div>
-<div class="field"><label>Irrigation access</label><select id="irrigation"><option value="0">Reliable</option><option value="8" selected>Sometimes</option><option value="18">None</option></select></div>
-<div class="field"><label>Crop growth stage</label><select id="stage"><option>Sowing</option><option>Growing</option><option>Flowering</option><option>Grain / fruit filling</option><option>Near harvest</option></select></div>
-<div class="field"><label>Observed heat stress</label><select id="heat"><option value="0">None</option><option value="8" selected>Some</option><option value="18">Severe</option></select></div>
-<div class="field wide"><button class="btn" style="width:100%" onclick="assessRisk()">Calculate farm risk</button></div>
-</div>
-<div id="riskResult" aria-live="polite"></div>
-</section>
+    <section class="hero">
+      <div class="hero-content">
+        <span class="tag">GROW SMARTER</span>
+        <h2>Better insights.<br>Healthier harvests.</h2>
+        <p>Explore weather conditions, monitor water stress and estimate your harvest in one place.</p>
+        <a class="button white-button" href="weather.html">Explore weather →</a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="hill hill-a"></div>
+        <div class="hill hill-b"></div>
+        <div class="plant plant-a">♧</div>
+        <div class="plant plant-b">♧</div>
+      </div>
+    </section>
 
-<section class="card">
-<h2>🌿 Crop health checker</h2>
-<p class="sub">Upload a photo and describe symptoms. This prototype uses your selected symptoms; it does not run an AI image-diagnosis model.</p>
-<div class="grid">
-<div class="field wide"><label>Crop leaf photo (optional)</label><input type="file" id="leafPhoto" accept="image/*" onchange="previewPhoto()"><img id="photoPreview" class="preview" hidden alt="Selected crop leaf"></div>
-<div class="field"><label>Crop</label><select id="diseaseCrop"><option>Cotton</option><option>Soybean</option><option>Rice</option><option>Wheat</option><option>Maize</option><option>Vegetables</option><option>Other</option></select></div>
-<div class="field"><label>Main symptom</label><select id="symptom"><option value="yellow">Yellow leaves</option><option value="spots">Brown or black spots</option><option value="curl">Curled or distorted leaves</option><option value="wilt">Wilting / drooping</option><option value="powder">White powdery growth</option><option value="holes">Holes or chewing damage</option></select></div>
-<div class="field"><label>How widespread?</label><select id="spread"><option value="few">A few leaves</option><option value="many">Many plants</option><option value="field">Most of the field</option></select></div>
-<div class="field wide"><button class="btn" style="width:100%" onclick="checkCrop()">Assess symptoms</button></div>
-</div>
-<div id="cropResult" aria-live="polite"></div>
-</section>
+    <div class="section-title">
+      <div>
+        <h2>Your farm tools</h2>
+        <p class="muted">Choose a module to get started.</p>
+      </div>
+      <span class="count">6 MODULES</span>
+    </div>
 
-<section class="card">
-<h2>🌾 Harvest and profit planner</h2>
-<p class="sub">Uses your previous yield as the baseline. The adjusted range is an illustrative planning scenario, not a validated yield prediction.</p>
-<div class="grid">
-<div class="field"><label>Crop</label><select id="crop"><option>Cotton</option><option>Soybean</option><option>Rice / paddy</option><option>Wheat</option><option>Maize</option><option>Sugarcane</option><option>Jowar</option><option>Vegetables</option><option>Other</option></select></div>
-<div class="field"><label>Field area (acres)</label><input id="area" type="number" min="0.1" step="0.1" value="2"></div>
-<div class="field"><label>Previous yield per acre (kg)</label><input id="yield" type="number" min="1" value="1000"></div>
-<div class="field"><label>Expected selling price (₹/kg)</label><input id="price" type="number" min="0" value="30"></div>
-<div class="field"><label>Total crop costs (₹)</label><input id="cost" type="number" min="0" value="10000"></div>
-<div class="field"><label>Soil type</label><select id="soil"><option>Black soil</option><option>Red soil</option><option>Alluvial soil</option><option>Sandy soil</option><option>Clay soil</option><option>Unknown</option></select></div>
-<div class="field wide"><button class="btn" style="width:100%" onclick="calculateHarvest()">Calculate harvest and profit</button></div>
-</div>
-<div id="harvestResult" aria-live="polite"></div>
-</section>
+    <section class="tool-grid">
+      <a class="tool-card" href="weather.html">
+        <div class="tool-icon gold">☀</div>
+        <small>WEATHER</small>
+        <h3>Weather Outlook</h3>
+        <p>Check a seven-day forecast for your area.</p>
+        <b>View forecast →</b>
+      </a>
+      <a class="tool-card" href="water-risk.html">
+        <div class="tool-icon blue">◉</div>
+        <small>WATER MANAGEMENT</small>
+        <h3>Water Risk</h3>
+        <p>Screen for possible crop water stress.</p>
+        <b>Check risk →</b>
+      </a>
+      <a class="tool-card" href="harvest.html">
+        <div class="tool-icon green">▤</div>
+        <small>PLANNING</small>
+        <h3>Harvest Planner</h3>
+        <p>Estimate crop yield, revenue and costs.</p>
+        <b>Plan harvest →</b>
+      </a>
+      <a class="tool-card" href="crop-health.html">
+        <div class="tool-icon pink">✿</div>
+        <small>CROP CARE</small>
+        <h3>Crop Health</h3>
+        <p>Record crop symptoms and preview a photo.</p>
+        <b>Record symptoms →</b>
+      </a>
+      <a class="tool-card" href="soil.html">
+        <div class="tool-icon earth">♧</div>
+        <small>SOIL MANAGEMENT</small>
+        <h3>Soil Advisor</h3>
+        <p>Explore general soil-care guidance.</p>
+        <b>Explore guidance →</b>
+      </a>
+      <a class="tool-card" href="market.html">
+        <div class="tool-icon purple">₹</div>
+        <small>FARMER RESOURCES</small>
+        <h3>Markets & Schemes</h3>
+        <p>Find market information and official portals.</p>
+        <b>View resources →</b>
+      </a>
+    </section>
 
-<section class="card">
-<h2>📈 Market price resources</h2>
-<p class="sub">These links take you to market information sources. This dashboard does not claim to have retrieved live mandi prices.</p>
-<div class="actions">
-<button class="btn2" onclick="openLink('https://agmarknet.gov.in/')">Open Agmarknet ↗</button>
-<button class="btn2" onclick="openLink('https://www.enam.gov.in/web/')">Open e-NAM ↗</button>
-<button class="btn2" onclick="copyText('https://agmarknet.gov.in/')">Copy market link</button>
-</div>
-<p class="note">Compare the same crop, grade, market and date. Prices can differ by location and quality.</p>
-</section>
+    <section class="panel">
+      <div class="section-title">
+        <div>
+          <h2>Quick farm profile</h2>
+          <p class="muted">Enter details to display a farm summary.</p>
+        </div>
+      </div>
+      <form id="profile-form" class="form-grid">
+        <label>Farm or village name
+          <input id="farm-name" placeholder="e.g. My farm, Paithan">
+        </label>
+        <label>Main crop
+          <select id="farm-crop">
+            <option value="">Choose a crop</option>
+            <option>Cotton</option><option>Soybean</option>
+            <option>Maize</option><option>Wheat</option>
+            <option>Jowar</option><option>Onion</option><option>Other</option>
+          </select>
+        </label>
+        <label>Farm area (acres)
+          <input id="farm-area" type="number" min="0" step="0.1" placeholder="e.g. 2.5">
+        </label>
+        <button class="button primary-button" type="submit">Show farm summary</button>
+      </form>
+      <div id="profile-result" class="result hidden"></div>
+    </section>
 
-<section class="card">
-<h2>🧪 Soil and crop planning</h2>
-<p class="sub">General educational guidance only. Use a soil test and local agricultural advice for crop-specific decisions.</p>
-<div class="grid">
-<div class="field"><label>Soil type</label><select id="soilGuide"><option>Black soil</option><option>Red soil</option><option>Alluvial soil</option><option>Sandy soil</option><option>Clay soil</option><option>Unknown</option></select></div>
-<div class="field"><label>Main concern</label><select id="soilConcern"><option value="water">Water shortage</option><option value="drain">Waterlogging / drainage</option><option value="nutrient">Low fertility / nutrients</option><option value="unknown">Unsure about soil</option></select></div>
-<div class="field wide"><button class="btn" style="width:100%" onclick="soilAdvice()">Get soil guidance</button></div>
-</div>
-<div id="soilResult" aria-live="polite"></div>
-</section>
-
-<section class="card">
-<h2>🇮🇳 Farmer support and schemes</h2>
-<p class="sub">Use official sources to check current eligibility, deadlines and application requirements.</p>
-<div class="actions">
-<button class="btn2" onclick="openLink('https://pmkisan.gov.in/')">PM-KISAN ↗</button>
-<button class="btn2" onclick="openLink('https://pmfby.gov.in/')">Crop insurance ↗</button>
-<button class="btn2" onclick="openLink('https://maharashtra.gov.in/')">Maharashtra Govt ↗</button>
-<button class="btn2" onclick="openLink('https://icar.org.in/')">ICAR guidance ↗</button>
-</div>
-<hr>
-<h3>🎙️ Voice helper</h3>
-<p class="sub">Use speech recognition if your browser and language settings support it.</p>
-<div class="search"><input id="voiceText" placeholder="Your question or spoken words"><button class="btn" onclick="startVoice()">Speak</button></div>
-<div class="actions" style="margin-top:9px">
-<button class="btn2" onclick="answerQuestion()">Get guidance</button>
-<button class="btn2" onclick="speakAnswer()">Read answer aloud</button>
-</div>
-<div id="voiceResult" class="result" aria-live="polite">Enter a farming question or use Speak.</div>
-</section>
-
-<section class="card">
-<h2>ℹ️ About this prototype</h2>
-<p class="note">Open-Meteo supplies the weather forecast. Risk scores are simplified screening indicators, not official warnings. The crop-health checker does not confirm a disease. Harvest ranges are illustrative, and profit depends on the values you enter. Verify prices, crop treatment and scheme eligibility with official sources or your local Krishi Vigyan Kendra (KVK). Do not apply pesticides based only on this tool.</p>
-<button class="btn2" onclick="resetApp()">Reset inputs</button>
-</section>
-</main>
-<footer>HarvestAlert AI · Built for smarter, informed farming</footer>
-
-<script>
-"use strict";
-let weatherData=null, currentRisk=0, currentAnswer="";
-const $=id=>document.getElementById(id);
-function status(id,text){$(id).textContent=text}
-function openLink(url){const w=window.open(url,"_blank","noopener");if(!w)status("weatherStatus","If the link did not open, allow pop-ups or copy the link from the browser address bar.");}
-function copyText(text){
- if(navigator.clipboard&&navigator.clipboard.writeText){
-  navigator.clipboard.writeText(text).then(()=>alert("Link copied")).catch(()=>prompt("Copy this link:",text));
- }else prompt("Copy this link:",text);
-}
-function wx(code){
- if(code===0)return ["☀️","Clear"];
- if([1,2].includes(code))return ["🌤️","Partly cloudy"];
- if(code===3)return ["☁️","Cloudy"];
- if([45,48].includes(code))return ["🌫️","Fog"];
- if([51,53,55,56,57].includes(code))return ["🌦️","Drizzle"];
- if([61,63,65,66,67,80,81,82].includes(code))return ["🌧️","Rain / showers"];
- if([95,96,99].includes(code))return ["⛈️","Thunderstorm"];
- if([71,73,75,77,85,86].includes(code))return ["❄️","Snow"];
- return ["🌤️","Variable"];
-}
-async function loadWeather(){
- const place=$("place").value.trim(),btn=$("weatherBtn");
- if(!place){status("weatherStatus","Please enter a village or city.");return}
- btn.disabled=true;status("weatherStatus","Finding location and loading real forecast…");
- try{
-  const g=await fetch("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(place)+"&count=5&language=en&format=json");
-  if(!g.ok)throw Error("Location service unavailable. Check internet.");
-  const j=await g.json();if(!j.results||!j.results.length)throw Error("Place not found. Add district or state.");
-  const loc=j.results[0];
-  const u="https://api.open-meteo.com/v1/forecast?latitude="+loc.latitude+"&longitude="+loc.longitude+"&current=temperature_2m,relative_humidity_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max&timezone=auto&forecast_days=7";
-  const r=await fetch(u);if(!r.ok)throw Error("Forecast service unavailable.");
-  weatherData=await r.json();
-  const d=weatherData.daily,total=d.precipitation_sum.reduce((a,b)=>a+(b||0),0);
-  $("temp").textContent=Math.round(weatherData.current.temperature_2m)+"°C";
-  $("condition").textContent=wx(weatherData.current.weather_code)[1];
-  $("humidity").textContent=weatherData.current.relative_humidity_2m+"%";
-  $("rain").textContent=total.toFixed(1)+" mm";
-  $("forecastPlace").textContent=[loc.name,loc.admin1,loc.country].filter(Boolean).join(", ")+" · Open-Meteo";
-  $("days").innerHTML=d.time.map((date,i)=>{
-   const z=wx(d.weather_code[i]),day=new Date(date+"T12:00:00").toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"});
-   return '<div class="day"><small>'+day+'</small><div class="icon">'+z[0]+'</div><b>'+Math.round(d.temperature_2m_max[i])+'° / '+Math.round(d.temperature_2m_min[i])+'°C</b><p>'+z[1]+'</p><p>🌧️ '+d.precipitation_sum[i]+' mm</p><p>Rain chance: '+(d.precipitation_probability_max[i]??"—")+'%</p></div>';
-  }).join("");
-  $("weatherPanel").hidden=false;
-  status("weatherStatus","Forecast loaded successfully.");
- }catch(e){status("weatherStatus","Could not load weather: "+e.message+" Check internet and try again.");}
- finally{btn.disabled=false}
-}
-function assessRisk(){
- let score=Number($("water").value)+Number($("moisture").value)+Number($("irrigation").value)+Number($("heat").value);
- const reasons=[];
- if(weatherData){
-  const d=weatherData.daily,rain=d.precipitation_sum.reduce((a,b)=>a+(b||0),0),max=Math.max(...d.temperature_2m_max);
-  if(rain<10){score+=25;reasons.push("low 7-day rainfall forecast")}
-  else if(rain<25){score+=12;reasons.push("limited 7-day rainfall forecast")}
-  if(max>=38){score+=20;reasons.push("high forecast heat")}
-  else if(max>=35){score+=10;reasons.push("warm forecast")}
- }else reasons.push("weather not loaded; forecast factors unavailable");
- if(["Flowering","Grain / fruit filling"].includes($("stage").value)){score+=8;reasons.push("sensitive growth stage")}
- if($("moisture").value==="15"||$("moisture").value==="25")reasons.push("low soil moisture reported");
- currentRisk=Math.min(100,score);
- const level=currentRisk<30?"LOW":currentRisk<60?"MODERATE":"HIGH",cls=currentRisk<30?"":currentRisk<60?"warn":"bad";
- $("riskResult").innerHTML='<div class="result '+cls+'"><span class="pill">'+level+' · '+currentRisk+'/100</span><h3>Farm water-stress screening</h3><p>'+ (reasons.length?reasons.join("; "):"No major stress factors entered.")+'</p><p>'+(currentRisk>=60?"Check crop and water supply soon. Seek local agricultural advice.":currentRisk>=30?"Monitor soil moisture and water supply closely.":"Continue regular monitoring; a low score does not guarantee crop safety.")+'</p><small>This score is a rough screening estimate, not an official drought forecast.</small></div>';
-}
-function calculateHarvest(){
- const a=Number($("area").value),y=Number($("yield").value),p=Number($("price").value),c=Number($("cost").value);
- if(!(a>0)||!(y>0)||p<0||c<0||!Number.isFinite(a*y*p+c)){
-  $("harvestResult").innerHTML='<div class="result warn">Enter valid positive area and yield, and non-negative price and costs.</div>';return;
- }
- const base=a*y;
- let loss=0,notes=[];
- if(weatherData){
-  const d=weatherData.daily,rain=d.precipitation_sum.reduce((s,v)=>s+(v||0),0),hot=Math.max(...d.temperature_2m_max);
-  if(rain<10){loss+=.08;notes.push("low forecast rainfall")}
-  if(hot>=38){loss+=.10;notes.push("high forecast heat")}
-  if(rain>100){loss+=.05;notes.push("heavy rainfall may disrupt field operations")}
- }else notes.push("weather unavailable; no weather adjustment");
- if($("water").value==="25")loss+=.12;
- if($("moisture").value==="15")loss+=.07;
- if($("moisture").value==="25")loss+=.12;
- if($("irrigation").value==="18")loss+=.08;
- if($("heat").value==="18")loss+=.10;
- if(["Flowering","Grain / fruit filling"].includes($("stage").value))loss+=.04;
- loss=Math.min(.35,loss);
- const low=base*(1-loss),revenue=base*p,profit=revenue-c;
- $("harvestResult").innerHTML='<div class="result"><span class="pill">PLANNING ESTIMATE</span><h3>Baseline: '+base.toLocaleString()+' kg</h3><p>Illustrative stress-adjusted range: <b>'+Math.round(low).toLocaleString()+'–'+Math.round(base).toLocaleString()+' kg</b></p><hr><p>Gross revenue at your entered price: <b>₹'+Math.round(revenue).toLocaleString()+'</b></p><p>Estimated profit before any unentered costs: <b>₹'+Math.round(profit).toLocaleString()+'</b></p><p>Crop: '+$("crop").value+' · Soil: '+$("soil").value+'</p><small>Factors: '+(notes.join(", ")||"no major forecast stress detected")+'. Not a validated yield model. Actual production and prices can differ substantially.</small></div>';
-}
-function previewPhoto(){
- const f=$("leafPhoto").files[0],img=$("photoPreview");
- if(!f){img.hidden=true;img.removeAttribute("src");return}
- if(!f.type.startsWith("image/")){alert("Please choose an image file.");return}
- if(f.size>8*1024*1024){alert("Choose a photo smaller than 8 MB.");$("leafPhoto").value="";return}
- const reader=new FileReader();
- reader.onload=()=>{img.src=reader.result;img.hidden=false};
- reader.onerror=()=>alert("Coup
+    <footer>© 2026 HarvestAlert <span>Built for informed farm decisions</span></footer>
+  </main>
+  <script src="assets/app.js"></script>
+</body>
+</html>
