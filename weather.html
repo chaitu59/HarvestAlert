@@ -1,0 +1,15 @@
+
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weather Outlook | HarvestAlert</title><link rel="stylesheet" href="assets/style.css">
+</head><body>
+<aside class="sidebar"><a class="brand" href="index.html">🌾 Harvest<span>Alert</span></a><p class="nav-label">FARM WORKSPACE</p><nav>
+<a href="index.html">▦ Dashboard</a><a class="active" href="weather.html">☀ Weather</a><a href="water-risk.html">◉ Water Risk</a><a href="harvest.html">▤ Harvest Planner</a><a href="crop-health.html">✿ Crop Health</a><a href="soil.html">♧ Soil Advisor</a><a href="market.html">₹ Markets & Schemes</a>
+</nav><div class="side-note"><span>☀</span><h3>Plan around the forecast</h3><p>Weather varies by location. Check conditions again before spraying or irrigation.</p></div><small class="side-footer">HARVESTALERT · WEATHER</small></aside>
+<main class="main"><header class="topbar"><div><p class="eyebrow">LOCAL CONDITIONS</p><h1>Weather Outlook</h1><p class="muted">Seven-day forecast for your area.</p></div><a class="button primary-button" href="index.html">← Dashboard</a></header>
+<section class="page-intro"><div class="tool-icon gold">☀</div><div><h2>Forecast for your location</h2><p class="muted">Search for a town or village. Internet access is required.</p></div></section>
+<section class="panel"><form id="weather-form" class="inline-form"><label>Village, town or city<input id="location" required value="Aurangabad, Maharashtra" placeholder="e.g. Paithan, Maharashtra"></label><button class="button primary-button" type="submit">Get forecast</button></form>
+<p id="weather-status" class="muted">Enter a location and select Get forecast.</p><div id="forecast-grid" class="forecast-grid"></div></section>
+<section class="info-grid"><article class="info"><h3>Before irrigation</h3><p>Check recent rainfall and soil moisture near the crop roots.</p></article><article class="info"><h3>Before spraying</h3><p>Follow product labels and local advice. Wind and rain can affect spraying.</p></article><article class="info"><h3>During heat</h3><p>Look for wilting and monitor crops carefully during sensitive growth stages.</p></article></section>
+<div class="warning">Forecast data is provided by Open-Meteo. Forecasts can change and do not replace field observations or official local warnings.</div><footer>© 2026 HarvestAlert <span>Weather module</span></footer></main><script src="assets/app.js"></script></body></html>
