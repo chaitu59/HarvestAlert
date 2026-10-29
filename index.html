@@ -1,244 +1,279 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HarvestAlert | Smart Farming</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#174c36">
+<title>HarvestAlert AI | Smart Farming</title>
 <style>
-:root{--green:#174c36;--lime:#c7ef79;--cream:#f5f4e9;--white:#fff;--muted:#667568;--border:#dfe6d9;--red:#b63c31;--amber:#9a6713}
+:root{--g:#174c36;--lime:#c8ef83;--bg:#f4f5eb;--card:#fff;--ink:#20372a;--muted:#68776b;--line:#dfe6d9;--red:#b83b31;--amber:#9a6815}
 *{box-sizing:border-box}
-body{margin:0;background:var(--cream);color:#20372a;font-family:Arial,Helvetica,sans-serif}
-header{background:var(--green);color:white;padding:22px 18px 30px;border-radius:0 0 26px 26px}
-.top,.wrap{max-width:950px;margin:auto}
-.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{font-size:21px;font-weight:800;letter-spacing:-.5px}
-.logo{display:inline-grid;place-items:center;background:var(--lime);color:var(--green);width:34px;height:34px;border-radius:11px;margin-right:7px}
-button, input,select{font:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px Arial,sans-serif}
+header{background:var(--g);color:#fff;padding:18px 16px 28px;border-radius:0 0 24px 24px}
+nav,.hero,main,footer{max-width:960px;margin:auto}
+nav{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.brand{font-size:21px;font-weight:800}
+.logo{background:var(--lime);color:var(--g);padding:8px;border-radius:10px;margin-right:7px}
+button,input,select{font:inherit}
 button{cursor:pointer}
-.lang{background:transparent;border:1px solid #8cae98;color:white;border-radius:20px;padding:8px 12px}
-.hero{padding-top:28px}
-.eyebrow{color:var(--lime);font-size:12px;font-weight:bold;letter-spacing:1.6px;text-transform:uppercase}
-h1{font-size:clamp(29px,6vw,44px);line-height:1.08;margin:10px 0}
-.hero p{color:#d9e6dc;line-height:1.5;max-width:580px;margin-bottom:0}
-.wrap{padding:18px 14px 35px}
-.search{display:flex;gap:8px;margin-top:-1px}
-input,select{width:100%;min-width:0;padding:12px;border:1px solid var(--border);border-radius:11px;background:#fff;color:#20372a}
-.btn{border:0;border-radius:11px;background:var(--green);color:white;padding:12px 16px;font-weight:bold}
-.btn:disabled{opacity:.55}
-.card{background:white;border:1px solid var(--border);border-radius:18px;padding:17px;margin:14px 0;box-shadow:0 4px 16px #1b4c3610}
-h2{font-size:19px;margin:0 0 5px}
-.sub{color:var(--muted);font-size:13px;line-height:1.5;margin:5px 0 14px}
+button:disabled{opacity:.5;cursor:wait}
+.lang,.navbtn{border:1px solid #779886;background:transparent;color:white;border-radius:10px;padding:9px}
+.hero{padding-top:27px}
+.kicker{color:var(--lime);font-size:11px;font-weight:bold;letter-spacing:1.5px}
+h1{font-size:clamp(30px,6vw,45px);line-height:1.08;margin:10px 0}
+.hero p{color:#dce8df;line-height:1.55;max-width:650px}
+main{padding:14px}
+.search{display:flex;gap:8px}
+input,select{width:100%;min-width:0;padding:11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.btn{background:var(--g);color:white;border:0;border-radius:10px;padding:12px 15px;font-weight:bold}
+.btn2{background:#eaf2e5;color:var(--g);border:1px solid #d4e2ce;border-radius:10px;padding:10px 12px;font-weight:bold}
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:17px;margin:13px 0;box-shadow:0 4px 14px #174c3608}
+h2{font-size:19px;margin:0 0 7px}
+h3{font-size:16px;margin:12px 0 6px}
+.sub,.note{color:var(--muted);font-size:13px;line-height:1.55}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
-.field label{display:block;font-size:12px;font-weight:bold;color:#4b6252;margin:0 0 6px}
-.field{min-width:0}
+.field{min-width:0}.field label{display:block;font-size:12px;font-weight:bold;color:#4d6352;margin-bottom:6px}
 .wide{grid-column:1/-1}
-.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0}
-.metric{background:#f0f5eb;padding:12px;border-radius:13px;min-width:0}
-.metric .big{font-size:22px;font-weight:800;display:block;margin:5px 0;overflow-wrap:anywhere}
-.metric small{color:var(--muted);font-size:11px}
-.weather{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.day{border:1px solid var(--border);border-radius:13px;padding:12px}
-.day .date{font-size:12px;color:var(--muted)}
-.day .symbol{font-size:25px;margin:8px 0}
-.day strong{font-size:14px}
-.day p{font-size:12px;color:var(--muted);margin:7px 0 0;line-height:1.4}
-.result{border-radius:13px;padding:14px;background:#edf5e8;margin-top:12px;line-height:1.6}
-.result.warn{background:#fff2d9}
-.result.bad{background:#fce9e5}
-.pill{display:inline-block;border-radius:30px;padding:5px 9px;font-size:12px;font-weight:bold;background:#e3eddf}
-.note{font-size:12px;color:var(--muted);line-height:1.55}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:10px 20px 30px}
-.status{font-size:13px;color:var(--muted);margin-top:10px}
-@media(min-width:650px){.weather{grid-template-columns:repeat(4,minmax(0,1fr))}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{padding-top:35px}.card{padding:22px}}
-@media(max-width:370px){.metrics{grid-template-columns:1fr}.search{flex-direction:column}}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}
+.metric{background:#eff5e9;padding:11px;border-radius:12px;min-width:0}
+.metric small{display:block;color:var(--muted);font-size:10px}
+.metric strong{display:block;font-size:22px;margin:6px 0;overflow-wrap:anywhere}
+.pill{display:inline-block;padding:5px 9px;border-radius:20px;background:#e7f1df;font-size:11px;font-weight:bold}
+.result{padding:13px;border-radius:12px;background:#edf5e8;margin-top:12px;line-height:1.6;overflow-wrap:anywhere}
+.warn{background:#fff1d8}.bad{background:#fce9e5}
+.days{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.day{border:1px solid var(--line);border-radius:12px;padding:11px}
+.day small{color:var(--muted)}.day .icon{font-size:25px;margin:7px 0}
+.preview{max-width:100%;max-height:240px;object-fit:contain;border-radius:12px;margin-top:10px}
+a{color:#176b47;overflow-wrap:anywhere}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.status{font-size:13px;color:var(--muted);margin-top:9px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:18px}
+hr{border:0;border-top:1px solid var(--line);margin:14px 0}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.days{grid-template-columns:repeat(4,minmax(0,1fr))}.card{padding:21px}}
+@media(max-width:350px){.metrics{grid-template-columns:1fr}.search{flex-direction:column}}
 </style>
 </head>
 <body>
 <header>
- <div class="top">
-  <div class="brand"><span class="logo">🌾</span>HarvestAlert</div>
-  <button class="lang" id="langBtn" onclick="toggleLanguage()">मराठी</button>
- </div>
- <div class="hero">
-  <div class="eyebrow" data-en="SMART FARMING · BETTER DECISIONS" data-mr="स्मार्ट शेती · योग्य निर्णय">SMART FARMING · BETTER DECISIONS</div>
-  <h1 data-en="Know your weather.<br>Protect your harvest." data-mr="हवामान जाणून घ्या.<br>पीक वाचवा.">Know your weather.<br>Protect your harvest.</h1>
-  <p data-en="Local forecasts, water-risk screening and a simple harvest outlook—all in one place." data-mr="स्थानिक हवामान, पाणीटंचाईचा अंदाज आणि पीक उत्पादनाचा प्राथमिक अंदाज—एकाच ठिकाणी.">Local forecasts, water-risk screening and a simple harvest outlook—all in one place.</p>
- </div>
+<nav>
+<div class="brand"><span class="logo">🌾</span>HarvestAlert AI</div>
+<button class="lang" id="langBtn" onclick="toggleLang()">मराठी</button>
+</nav>
+<div class="hero">
+<div class="kicker">SMART FARMING · BETTER DECISIONS</div>
+<h1>Protect your crop.<br>Plan your harvest.</h1>
+<p>Weather insights, crop-health screening, harvest planning and farmer resources in one place.</p>
+</div>
 </header>
 
-<main class="wrap">
- <section class="card">
-  <h2 data-en="📍 Your farm location" data-mr="📍 तुमच्या शेताचे ठिकाण">📍 Your farm location</h2>
-  <p class="sub" data-en="Enter a village, town or city to load its real 7-day weather forecast." data-mr="प्रत्यक्ष ७ दिवसांचा हवामान अंदाज पाहण्यासाठी गाव किंवा शहराचे नाव टाका.">Enter a village, town or city to load its real 7-day weather forecast.</p>
-  <div class="search">
-   <input id="place" value="Pune, Maharashtra" aria-label="Village or city" placeholder="Village or city name">
-   <button class="btn" id="weatherBtn" onclick="loadWeather()">Get forecast</button>
-  </div>
-  <div id="locationStatus" class="status" aria-live="polite">Ready to load weather.</div>
-  <div id="weatherPanel" hidden>
-   <div class="metrics">
-    <div class="metric"><small data-en="CURRENT TEMP." data-mr="सध्याचे तापमान">CURRENT TEMP.</small><span class="big" id="currentTemp">—</span><small id="currentDesc">—</small></div>
-    <div class="metric"><small data-en="7-DAY RAIN" data-mr="७ दिवसांचा पाऊस">7-DAY RAIN</small><span class="big" id="rainTotal">—</span><small data-en="Forecast total" data-mr="अंदाजित एकूण">Forecast total</small></div>
-    <div class="metric"><small data-en="HUMIDITY" data-mr="आर्द्रता">HUMIDITY</small><span class="big" id="humidity">—</span><small data-en="Current reading" data-mr="सध्याची नोंद">Current reading</small></div>
-   </div>
-   <h2 data-en="7-day forecast" data-mr="७ दिवसांचा अंदाज">7-day forecast</h2>
-   <p class="sub" id="forecastLocation"></p>
-   <div class="weather" id="forecastDays"></div>
-  </div>
- </section>
+<main>
+<section class="card">
+<h2>📍 Local weather intelligence</h2>
+<p class="sub">Enter a village, town or city. Forecast data comes from Open-Meteo.</p>
+<div class="search">
+<input id="place" value="Ahilyanagar, Maharashtra" placeholder="Village or city">
+<button class="btn" id="weatherBtn" onclick="loadWeather()">Get weather</button>
+</div>
+<div class="status" id="weatherStatus" aria-live="polite">Weather has not loaded yet.</div>
+<div id="weatherPanel" hidden>
+<div class="metrics">
+<div class="metric"><small>CURRENT TEMPERATURE</small><strong id="temp">—</strong><small id="condition">—</small></div>
+<div class="metric"><small>7-DAY RAINFALL</small><strong id="rain">—</strong><small>Total forecast</small></div>
+<div class="metric"><small>HUMIDITY</small><strong id="humidity">—</strong><small>Current reading</small></div>
+</div>
+<h3 id="forecastTitle">Forecast</h3><p class="sub" id="forecastPlace"></p>
+<div class="days" id="days"></div>
+</div>
+</section>
 
- <section class="card">
-  <h2 data-en="💧 Water & drought-risk check" data-mr="💧 पाणी आणि दुष्काळ जोखीम">💧 Water & drought-risk check</h2>
-  <p class="sub" data-en="Combine the forecast with what you observe on your farm." data-mr="हवामान अंदाजासोबत शेतातील प्रत्यक्ष परिस्थिती नोंदवा.">Combine the forecast with what you observe on your farm.</p>
-  <div class="grid">
-   <div class="field">
-    <label data-en="Main water source" data-mr="मुख्य पाण्याचा स्रोत">Main water source</label>
-    <select id="waterSource">
-     <option value="well">Well / borewell</option><option value="dam">Dam / reservoir</option><option value="canal">Canal</option><option value="rain">Rain-fed only</option><option value="other">Other</option>
-    </select>
-   </div>
-   <div class="field">
-    <label data-en="Water currently available" data-mr="सध्या उपलब्ध पाणी">Water currently available</label>
-    <select id="waterLevel"><option value="good">Good</option><option value="medium" selected>Limited</option><option value="low">Very low</option></select>
-   </div>
-   <div class="field">
-    <label data-en="Soil moisture" data-mr="जमिनीतील ओलावा">Soil moisture</label>
-    <select id="moisture"><option value="wet">Wet</option><option value="normal" selected>Normal</option><option value="dry">Dry</option><option value="verydry">Very dry</option></select>
-   </div>
-   <div class="field">
-    <label data-en="Irrigation access" data-mr="सिंचनाची सोय">Irrigation access</label>
-    <select id="irrigation"><option value="yes">Reliable</option><option value="sometimes" selected>Sometimes</option><option value="no">None</option></select>
-   </div>
-   <div class="field">
-    <label data-en="Crop stage" data-mr="पिकाची अवस्था">Crop stage</label>
-    <select id="stage"><option value="sowing">Sowing</option><option value="vegetative">Growing</option><option value="flowering">Flowering</option><option value="filling">Fruit / grain filling</option><option value="mature">Near harvest</option></select>
-   </div>
-   <div class="field">
-    <label data-en="Observed heat stress" data-mr="उष्णतेचा ताण">Observed heat stress</label>
-    <select id="heat"><option value="none">None</option><option value="some" selected>Some</option><option value="severe">Severe</option></select>
-   </div>
-   <div class="field wide"><button class="btn" style="width:100%" onclick="assess()">Assess farm risk</button></div>
-  </div>
-  <div id="riskResult" aria-live="polite"></div>
- </section>
+<section class="card">
+<h2>💧 Water and drought-risk check</h2>
+<p class="sub">This is a simple screening estimate, not an official drought warning.</p>
+<div class="grid">
+<div class="field"><label>Water source</label><select id="source"><option>Well / borewell</option><option>Dam / reservoir</option><option>Canal</option><option>Rain-fed only</option><option>Other</option></select></div>
+<div class="field"><label>Available water</label><select id="water"><option value="0">Good</option><option value="12" selected>Limited</option><option value="25">Very low</option></select></div>
+<div class="field"><label>Soil moisture</label><select id="moisture"><option value="0">Wet</option><option value="5" selected>Normal</option><option value="15">Dry</option><option value="25">Very dry</option></select></div>
+<div class="field"><label>Irrigation access</label><select id="irrigation"><option value="0">Reliable</option><option value="8" selected>Sometimes</option><option value="18">None</option></select></div>
+<div class="field"><label>Crop growth stage</label><select id="stage"><option>Sowing</option><option>Growing</option><option>Flowering</option><option>Grain / fruit filling</option><option>Near harvest</option></select></div>
+<div class="field"><label>Observed heat stress</label><select id="heat"><option value="0">None</option><option value="8" selected>Some</option><option value="18">Severe</option></select></div>
+<div class="field wide"><button class="btn" style="width:100%" onclick="assessRisk()">Calculate farm risk</button></div>
+</div>
+<div id="riskResult" aria-live="polite"></div>
+</section>
 
- <section class="card">
-  <h2 data-en="🌱 Harvest & crop-quality outlook" data-mr="🌱 पीक उत्पादन आणि गुणवत्तेचा अंदाज">🌱 Harvest & crop-quality outlook</h2>
-  <p class="sub" data-en="Enter your own crop and yield records. Estimates are planning aids, not guaranteed predictions." data-mr="तुमच्या पिकाची आणि उत्पादनाची माहिती भरा. हा अंदाज नियोजनासाठी आहे, हमी नाही.">Enter your own crop and yield records. Estimates are planning aids, not guaranteed predictions.</p>
-  <div class="grid">
-   <div class="field"><label data-en="Crop" data-mr="पीक">Crop</label>
-    <select id="crop"><option value="cotton">Cotton</option><option value="soybean">Soybean</option><option value="rice">Rice / paddy</option><option value="wheat">Wheat</option><option value="maize">Maize</option><option value="sugarcane">Sugarcane</option><option value="jowar">Jowar</option><option value="vegetables">Vegetables</option><option value="other">Other</option></select>
-   </div>
-   <div class="field"><label data-en="Field area (acres)" data-mr="शेताचे क्षेत्र (एकर)">Field area (acres)</label><input id="area" type="number" min="0" step="0.1" value="2"></div>
-   <div class="field"><label data-en="Previous yield per acre (kg)" data-mr="मागील उत्पादन प्रति एकर (किलो)">Previous yield per acre (kg)</label><input id="yield" type="number" min="0" step="1" value="1000"></div>
-   <div class="field"><label data-en="Soil type" data-mr="जमिनीचा प्रकार">Soil type</label><select id="soil"><option>Black soil</option><option>Red soil</option><option>Alluvial soil</option><option>Sandy soil</option><option>Clay soil</option><option>Other / unknown</option></select></div>
-   <div class="field"><label data-en="Expected harvest timing" data-mr="अपेक्षित कापणी">Expected harvest timing</label><select id="timing"><option value="soon">Within 2 weeks</option><option value="month" selected>Within a month</option><option value="later">Later</option></select></div>
-   <div class="field wide"><button class="btn" style="width:100%" onclick="harvest()">Calculate harvest outlook</button></div>
-  </div>
-  <div id="harvestResult" aria-live="polite"></div>
- </section>
+<section class="card">
+<h2>🌿 Crop health checker</h2>
+<p class="sub">Upload a photo and describe symptoms. This prototype uses your selected symptoms; it does not run an AI image-diagnosis model.</p>
+<div class="grid">
+<div class="field wide"><label>Crop leaf photo (optional)</label><input type="file" id="leafPhoto" accept="image/*" onchange="previewPhoto()"><img id="photoPreview" class="preview" hidden alt="Selected crop leaf"></div>
+<div class="field"><label>Crop</label><select id="diseaseCrop"><option>Cotton</option><option>Soybean</option><option>Rice</option><option>Wheat</option><option>Maize</option><option>Vegetables</option><option>Other</option></select></div>
+<div class="field"><label>Main symptom</label><select id="symptom"><option value="yellow">Yellow leaves</option><option value="spots">Brown or black spots</option><option value="curl">Curled or distorted leaves</option><option value="wilt">Wilting / drooping</option><option value="powder">White powdery growth</option><option value="holes">Holes or chewing damage</option></select></div>
+<div class="field"><label>How widespread?</label><select id="spread"><option value="few">A few leaves</option><option value="many">Many plants</option><option value="field">Most of the field</option></select></div>
+<div class="field wide"><button class="btn" style="width:100%" onclick="checkCrop()">Assess symptoms</button></div>
+</div>
+<div id="cropResult" aria-live="polite"></div>
+</section>
 
- <section class="card">
-  <h2 data-en="⚠️ Important information" data-mr="⚠️ महत्त्वाची माहिती">⚠️ Important information</h2>
-  <p class="note" data-en="Weather is supplied by Open-Meteo. Drought risk is a simple screening score based on the forecast and your answers—not an official drought warning. Harvest quantity starts from your previous yield and field area; the stress-adjusted range is an illustrative estimate, not a validated crop model. Crop quality cannot be reliably graded from weather alone. Confirm decisions with local agricultural officers or KVK experts." data-mr="हवामान Open-Meteo कडून मिळते. दुष्काळ जोखीम हा अंदाज आणि तुमच्या उत्तरांवर आधारित प्राथमिक स्कोअर आहे; अधिकृत इशारा नाही. उत्पादनाचा आधार मागील उत्पादन आणि क्षेत्र आहे. ताणानुसार बदललेला अंदाज हा हमी किंवा प्रमाणित पीक मॉडेल नाही. फक्त हवामानावरून गुणवत्तेचा अचूक दर्जा सांगता येत नाही. निर्णयासाठी स्थानिक कृषी अधिकारी किंवा कृषी विज्ञान केंद्राचा सल्ला घ्या.">Weather is supplied by Open-Meteo. Drought risk is a simple screening score based on the forecast and your answers—not an official drought warning. Harvest quantity starts from your previous yield and field area; the stress-adjusted range is an illustrative estimate, not a validated crop model. Crop quality cannot be reliably graded from weather alone. Confirm decisions with local agricultural officers or KVK experts.</p>
- </section>
+<section class="card">
+<h2>🌾 Harvest and profit planner</h2>
+<p class="sub">Uses your previous yield as the baseline. The adjusted range is an illustrative planning scenario, not a validated yield prediction.</p>
+<div class="grid">
+<div class="field"><label>Crop</label><select id="crop"><option>Cotton</option><option>Soybean</option><option>Rice / paddy</option><option>Wheat</option><option>Maize</option><option>Sugarcane</option><option>Jowar</option><option>Vegetables</option><option>Other</option></select></div>
+<div class="field"><label>Field area (acres)</label><input id="area" type="number" min="0.1" step="0.1" value="2"></div>
+<div class="field"><label>Previous yield per acre (kg)</label><input id="yield" type="number" min="1" value="1000"></div>
+<div class="field"><label>Expected selling price (₹/kg)</label><input id="price" type="number" min="0" value="30"></div>
+<div class="field"><label>Total crop costs (₹)</label><input id="cost" type="number" min="0" value="10000"></div>
+<div class="field"><label>Soil type</label><select id="soil"><option>Black soil</option><option>Red soil</option><option>Alluvial soil</option><option>Sandy soil</option><option>Clay soil</option><option>Unknown</option></select></div>
+<div class="field wide"><button class="btn" style="width:100%" onclick="calculateHarvest()">Calculate harvest and profit</button></div>
+</div>
+<div id="harvestResult" aria-live="polite"></div>
+</section>
+
+<section class="card">
+<h2>📈 Market price resources</h2>
+<p class="sub">These links take you to market information sources. This dashboard does not claim to have retrieved live mandi prices.</p>
+<div class="actions">
+<button class="btn2" onclick="openLink('https://agmarknet.gov.in/')">Open Agmarknet ↗</button>
+<button class="btn2" onclick="openLink('https://www.enam.gov.in/web/')">Open e-NAM ↗</button>
+<button class="btn2" onclick="copyText('https://agmarknet.gov.in/')">Copy market link</button>
+</div>
+<p class="note">Compare the same crop, grade, market and date. Prices can differ by location and quality.</p>
+</section>
+
+<section class="card">
+<h2>🧪 Soil and crop planning</h2>
+<p class="sub">General educational guidance only. Use a soil test and local agricultural advice for crop-specific decisions.</p>
+<div class="grid">
+<div class="field"><label>Soil type</label><select id="soilGuide"><option>Black soil</option><option>Red soil</option><option>Alluvial soil</option><option>Sandy soil</option><option>Clay soil</option><option>Unknown</option></select></div>
+<div class="field"><label>Main concern</label><select id="soilConcern"><option value="water">Water shortage</option><option value="drain">Waterlogging / drainage</option><option value="nutrient">Low fertility / nutrients</option><option value="unknown">Unsure about soil</option></select></div>
+<div class="field wide"><button class="btn" style="width:100%" onclick="soilAdvice()">Get soil guidance</button></div>
+</div>
+<div id="soilResult" aria-live="polite"></div>
+</section>
+
+<section class="card">
+<h2>🇮🇳 Farmer support and schemes</h2>
+<p class="sub">Use official sources to check current eligibility, deadlines and application requirements.</p>
+<div class="actions">
+<button class="btn2" onclick="openLink('https://pmkisan.gov.in/')">PM-KISAN ↗</button>
+<button class="btn2" onclick="openLink('https://pmfby.gov.in/')">Crop insurance ↗</button>
+<button class="btn2" onclick="openLink('https://maharashtra.gov.in/')">Maharashtra Govt ↗</button>
+<button class="btn2" onclick="openLink('https://icar.org.in/')">ICAR guidance ↗</button>
+</div>
+<hr>
+<h3>🎙️ Voice helper</h3>
+<p class="sub">Use speech recognition if your browser and language settings support it.</p>
+<div class="search"><input id="voiceText" placeholder="Your question or spoken words"><button class="btn" onclick="startVoice()">Speak</button></div>
+<div class="actions" style="margin-top:9px">
+<button class="btn2" onclick="answerQuestion()">Get guidance</button>
+<button class="btn2" onclick="speakAnswer()">Read answer aloud</button>
+</div>
+<div id="voiceResult" class="result" aria-live="polite">Enter a farming question or use Speak.</div>
+</section>
+
+<section class="card">
+<h2>ℹ️ About this prototype</h2>
+<p class="note">Open-Meteo supplies the weather forecast. Risk scores are simplified screening indicators, not official warnings. The crop-health checker does not confirm a disease. Harvest ranges are illustrative, and profit depends on the values you enter. Verify prices, crop treatment and scheme eligibility with official sources or your local Krishi Vigyan Kendra (KVK). Do not apply pesticides based only on this tool.</p>
+<button class="btn2" onclick="resetApp()">Reset inputs</button>
+</section>
 </main>
-<footer>HarvestAlert · Weather-informed farming decisions · Open-Meteo weather data</footer>
+<footer>HarvestAlert AI · Built for smarter, informed farming</footer>
 
 <script>
-let forecast=null, locationName="", lang="en", riskScore=0;
+"use strict";
+let weatherData=null, currentRisk=0, currentAnswer="";
 const $=id=>document.getElementById(id);
-function toggleLanguage(){
- lang=lang==="en"?"mr":"en";
- $("langBtn").textContent=lang==="en"?"मराठी":"English";
- document.documentElement.lang=lang;
- document.querySelectorAll("[data-en]").forEach(el=>{
-  el.innerHTML=el.dataset[lang];
- });
+function status(id,text){$(id).textContent=text}
+function openLink(url){const w=window.open(url,"_blank","noopener");if(!w)status("weatherStatus","If the link did not open, allow pop-ups or copy the link from the browser address bar.");}
+function copyText(text){
+ if(navigator.clipboard&&navigator.clipboard.writeText){
+  navigator.clipboard.writeText(text).then(()=>alert("Link copied")).catch(()=>prompt("Copy this link:",text));
+ }else prompt("Copy this link:",text);
 }
-function msg(en,mr){return lang==="en"?en:mr}
-function weatherInfo(code){
- if(code===0)return ["☀️",msg("Clear sky","निरभ्र आकाश")];
- if([1,2].includes(code))return ["🌤️",msg("Mostly clear","अंशतः ढगाळ")];
- if(code===3)return ["☁️",msg("Cloudy","ढगाळ")];
- if([45,48].includes(code))return ["🌫️",msg("Fog","धुके")];
- if([51,53,55,56,57].includes(code))return ["🌦️",msg("Drizzle","रिमझिम पाऊस")];
- if([61,63,65,66,67,80,81,82].includes(code))return ["🌧️",msg("Rain / showers","पाऊस / सरी")];
- if([71,73,75,77,85,86].includes(code))return ["❄️",msg("Snow","बर्फ")];
- if([95,96,99].includes(code))return ["⛈️",msg("Thunderstorm","वादळासह पाऊस")];
- return ["🌦️",msg("Variable","बदलते हवामान")];
+function wx(code){
+ if(code===0)return ["☀️","Clear"];
+ if([1,2].includes(code))return ["🌤️","Partly cloudy"];
+ if(code===3)return ["☁️","Cloudy"];
+ if([45,48].includes(code))return ["🌫️","Fog"];
+ if([51,53,55,56,57].includes(code))return ["🌦️","Drizzle"];
+ if([61,63,65,66,67,80,81,82].includes(code))return ["🌧️","Rain / showers"];
+ if([95,96,99].includes(code))return ["⛈️","Thunderstorm"];
+ if([71,73,75,77,85,86].includes(code))return ["❄️","Snow"];
+ return ["🌤️","Variable"];
 }
 async function loadWeather(){
- const place=$("place").value.trim();
- if(!place){$("locationStatus").textContent=msg("Enter a village or city name.","गाव किंवा शहराचे नाव टाका.");return}
- const btn=$("weatherBtn");btn.disabled=true;
- $("locationStatus").textContent=msg("Finding location and loading forecast…","ठिकाण आणि हवामान शोधत आहे…");
+ const place=$("place").value.trim(),btn=$("weatherBtn");
+ if(!place){status("weatherStatus","Please enter a village or city.");return}
+ btn.disabled=true;status("weatherStatus","Finding location and loading real forecast…");
  try{
-  const geo=await fetch("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(place)+"&count=5&language=en&format=json");
-  if(!geo.ok)throw Error("Location service unavailable");
-  const gd=await geo.json();
-  if(!gd.results?.length)throw Error("No matching place found. Try adding district or state.");
-  const loc=gd.results[0];
-  const url="https://api.open-meteo.com/v1/forecast?latitude="+loc.latitude+"&longitude="+loc.longitude+"&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max&current=temperature_2m,relative_humidity_2m,precipitation,weather_code&timezone=auto&forecast_days=7";
-  const res=await fetch(url);if(!res.ok)throw Error("Weather service unavailable");
-  forecast=await res.json();locationName=[loc.name,loc.admin1,loc.country].filter(Boolean).join(", ");
-  $("forecastLocation").textContent=locationName+" · "+msg("Source: Open-Meteo","स्रोत: Open-Meteo");
-  $("currentTemp").textContent=Math.round(forecast.current.temperature_2m)+"°C";
-  $("currentDesc").textContent=weatherInfo(forecast.current.weather_code)[1];
-  $("humidity").textContent=forecast.current.relative_humidity_2m+"%";
-  const total=forecast.daily.precipitation_sum.reduce((a,b)=>a+(b||0),0);
-  $("rainTotal").textContent=total.toFixed(1)+" mm";
-  $("forecastDays").innerHTML=forecast.daily.time.map((date,i)=>{
-   const [icon,desc]=weatherInfo(forecast.daily.weather_code[i]);
-   const d=new Date(date+"T12:00:00").toLocaleDateString(lang==="en"?"en-IN":"mr-IN",{weekday:"short",day:"numeric",month:"short"});
-   return `<div class="day"><div class="date">${d}</div><div class="symbol">${icon}</div><strong>${Math.round(forecast.daily.temperature_2m_max[i])}° / ${Math.round(forecast.daily.temperature_2m_min[i])}°C</strong><p>${desc}</p><p>🌧️ ${forecast.daily.precipitation_sum[i]} mm</p><p>☔ ${forecast.daily.precipitation_probability_max[i]??0}% ${msg("rain chance","पावसाची शक्यता")}</p></div>`;
+  const g=await fetch("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(place)+"&count=5&language=en&format=json");
+  if(!g.ok)throw Error("Location service unavailable. Check internet.");
+  const j=await g.json();if(!j.results||!j.results.length)throw Error("Place not found. Add district or state.");
+  const loc=j.results[0];
+  const u="https://api.open-meteo.com/v1/forecast?latitude="+loc.latitude+"&longitude="+loc.longitude+"&current=temperature_2m,relative_humidity_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max&timezone=auto&forecast_days=7";
+  const r=await fetch(u);if(!r.ok)throw Error("Forecast service unavailable.");
+  weatherData=await r.json();
+  const d=weatherData.daily,total=d.precipitation_sum.reduce((a,b)=>a+(b||0),0);
+  $("temp").textContent=Math.round(weatherData.current.temperature_2m)+"°C";
+  $("condition").textContent=wx(weatherData.current.weather_code)[1];
+  $("humidity").textContent=weatherData.current.relative_humidity_2m+"%";
+  $("rain").textContent=total.toFixed(1)+" mm";
+  $("forecastPlace").textContent=[loc.name,loc.admin1,loc.country].filter(Boolean).join(", ")+" · Open-Meteo";
+  $("days").innerHTML=d.time.map((date,i)=>{
+   const z=wx(d.weather_code[i]),day=new Date(date+"T12:00:00").toLocaleDateString("en-IN",{weekday:"short",day:"numeric",month:"short"});
+   return '<div class="day"><small>'+day+'</small><div class="icon">'+z[0]+'</div><b>'+Math.round(d.temperature_2m_max[i])+'° / '+Math.round(d.temperature_2m_min[i])+'°C</b><p>'+z[1]+'</p><p>🌧️ '+d.precipitation_sum[i]+' mm</p><p>Rain chance: '+(d.precipitation_probability_max[i]??"—")+'%</p></div>';
   }).join("");
   $("weatherPanel").hidden=false;
-  $("locationStatus").textContent=msg("Forecast loaded successfully.","हवामान अंदाज मिळाला.");
- }catch(e){$("locationStatus").textContent=msg("Could not load: ","मिळाले नाही: ")+e.message;}
+  status("weatherStatus","Forecast loaded successfully.");
+ }catch(e){status("weatherStatus","Could not load weather: "+e.message+" Check internet and try again.");}
  finally{btn.disabled=false}
 }
-function assess(){
- let score=0, reasons=[];
- if(forecast){
-  const rain=forecast.daily.precipitation_sum.reduce((a,b)=>a+(b||0),0);
-  if(rain<10){score+=25;reasons.push(msg("low forecast rainfall","अंदाजित पाऊस कमी"))}
-  else if(rain<25){score+=12;reasons.push(msg("limited forecast rainfall","अंदाजित पाऊस मर्यादित"))}
-  const maxTemp=Math.max(...forecast.daily.temperature_2m_max);
-  if(maxTemp>=38){score+=20;reasons.push(msg("high forecast heat","जास्त तापमानाचा अंदाज"))}
-  else if(maxTemp>=35){score+=10;reasons.push(msg("warm forecast temperatures","उष्ण हवामानाचा अंदाज"))}
- }else{reasons.push(msg("weather not loaded; forecast unavailable","हवामान मिळालेले नाही"))}
- const water=$("waterLevel").value, soil=$("moisture").value, irrigation=$("irrigation").value, stage=$("stage").value;
- score+=({good:0,medium:12,low:25})[water];
- score+=({wet:0,normal:5,dry:15,verydry:25})[soil];
- score+=({yes:0,sometimes:8,no:18})[irrigation];
- if(["flowering","filling"].includes(stage))score+=8;
- if($("heat").value==="some")score+=8;
- if($("heat").value==="severe")score+=18;
- riskScore=Math.min(100,score);
- const level=riskScore<30?msg("LOW","कमी"):riskScore<60?msg("MODERATE","मध्यम"):msg("HIGH","जास्त");
- const cls=riskScore<30?"":riskScore<60?"warn":"bad";
- $("riskResult").innerHTML=`<div class="result ${cls}"><span class="pill">${level} · ${riskScore}/100</span><h3>${msg("Farm drought-stress screening","शेतातील दुष्काळ-ताण तपासणी")}</h3><p>${msg("Factors to review: ","तपासण्याचे घटक: ")}${reasons.join(", ")}.</p><p>${riskScore>=60?msg("Check water reserves and crop condition soon; seek local agricultural advice.","पाणीसाठा आणि पिकाची स्थिती लवकर तपासा; स्थानिक कृषी सल्ला घ्या."):riskScore>=30?msg("Monitor soil moisture and water supply regularly.","जमिनीतील ओलावा आणि पाणीपुरवठा नियमित तपासा."):msg("Continue monitoring; a low score does not guarantee crop safety.","नियमित निरीक्षण सुरू ठेवा; कमी स्कोअर म्हणजे पीक सुरक्षित असल्याची हमी नाही.")}</p><small>${msg("This is a rough screening score, not an official drought forecast.","हा प्राथमिक स्कोअर आहे; अधिकृत दुष्काळ अंदाज नाही.")}</small></div>`;
+function assessRisk(){
+ let score=Number($("water").value)+Number($("moisture").value)+Number($("irrigation").value)+Number($("heat").value);
+ const reasons=[];
+ if(weatherData){
+  const d=weatherData.daily,rain=d.precipitation_sum.reduce((a,b)=>a+(b||0),0),max=Math.max(...d.temperature_2m_max);
+  if(rain<10){score+=25;reasons.push("low 7-day rainfall forecast")}
+  else if(rain<25){score+=12;reasons.push("limited 7-day rainfall forecast")}
+  if(max>=38){score+=20;reasons.push("high forecast heat")}
+  else if(max>=35){score+=10;reasons.push("warm forecast")}
+ }else reasons.push("weather not loaded; forecast factors unavailable");
+ if(["Flowering","Grain / fruit filling"].includes($("stage").value)){score+=8;reasons.push("sensitive growth stage")}
+ if($("moisture").value==="15"||$("moisture").value==="25")reasons.push("low soil moisture reported");
+ currentRisk=Math.min(100,score);
+ const level=currentRisk<30?"LOW":currentRisk<60?"MODERATE":"HIGH",cls=currentRisk<30?"":currentRisk<60?"warn":"bad";
+ $("riskResult").innerHTML='<div class="result '+cls+'"><span class="pill">'+level+' · '+currentRisk+'/100</span><h3>Farm water-stress screening</h3><p>'+ (reasons.length?reasons.join("; "):"No major stress factors entered.")+'</p><p>'+(currentRisk>=60?"Check crop and water supply soon. Seek local agricultural advice.":currentRisk>=30?"Monitor soil moisture and water supply closely.":"Continue regular monitoring; a low score does not guarantee crop safety.")+'</p><small>This score is a rough screening estimate, not an official drought forecast.</small></div>';
 }
-function harvest(){
- const area=Number($("area").value), yieldA=Number($("yield").value);
- if(!(area>0)||!(yieldA>0)){ $("harvestResult").innerHTML=`<div class="result warn">${msg("Enter field area and previous yield above zero.","क्षेत्र आणि मागील उत्पादन शून्यापेक्षा जास्त भरा.")}</div>`;return}
- const baseline=area*yieldA;
- let stress=0, notes=[];
- if(forecast){
-  const rain=forecast.daily.precipitation_sum.reduce((a,b)=>a+(b||0),0);
-  const maxT=Math.max(...forecast.daily.temperature_2m_max);
-  if(rain<10){stress+=.08;notes.push(msg("low forecast rain","कमी अंदाजित पाऊस"))}
-  if(maxT>=38){stress+=.1;notes.push(msg("high forecast heat","जास्त तापमान"))}
-  if(rain>100){stress+=.05;notes.push(msg("heavy rain may affect field operations","जास्त पावसामुळे शेतातील कामांवर परिणाम होऊ शकतो"))}
- }else notes.push(msg("weather not loaded","हवामान अंदाज उपलब्ध नाही"));
- if($("waterLevel").value==="low")stress+=.12;
- if($("moisture").value==="dry")stress+=.07;
- if($("moisture").value==="verydry")stress+=.12;
- if($("irrigation").value==="no")stress+=.08;
- if($("heat").value==="severe")stress+=.1;
- if(["flowering","filling"].includes($("stage").value))stress+=.04;
- stress=Math.min(.35,stress);
- const lo=baseline*(1-stress), hi=baseline;
- const quality=stress<.1?msg("Some stress indicators","काही ताणाचे संकेत"):stress<.22?msg("Several stress indicators","अनेक ताणाचे संकेत"):msg("Elevated stress indicators","ताणाचे जास्त संकेत");
- $("harvestResult").innerHTML=`<div class="result"><span class="pill">${msg("PLANNING OUTLOOK","नियोजनाचा अंदाज")}</span><h3>${msg("Baseline harvest quantity","मूलभूत अपेक्षित उत्पादन")}: ${baseline.toLocaleString(undefined,{maximumFractionDigits:1})} kg</h3><p>${msg("Based on your previous yield × field area. Illustrative stress-adjusted planning range:","मागील उत्पादन × क्षेत्रावर आधारित. ताण लक्षात घेऊन नियोजनासाठी अंदाजे श्रेणी:")} <strong>${lo.toLocaleString(undefined,{maximumFractionDigits:1})}–${hi.toLocaleString(undefined,{maximumFractionDigits:1})} kg</strong></p><hr style="border:0;border-top:1px solid #dfe6d9"><h3>${msg("Crop quality outlook","पीक गुणवत्तेचे संकेत")}: ${quality}</h3><p>${msg("This is not a measured quality grade. Inspect for pest damage, disease, grain/fruit condition and moisture before harvest.","हा मोजलेला गुणवत
+function calculateHarvest(){
+ const a=Number($("area").value),y=Number($("yield").value),p=Number($("price").value),c=Number($("cost").value);
+ if(!(a>0)||!(y>0)||p<0||c<0||!Number.isFinite(a*y*p+c)){
+  $("harvestResult").innerHTML='<div class="result warn">Enter valid positive area and yield, and non-negative price and costs.</div>';return;
+ }
+ const base=a*y;
+ let loss=0,notes=[];
+ if(weatherData){
+  const d=weatherData.daily,rain=d.precipitation_sum.reduce((s,v)=>s+(v||0),0),hot=Math.max(...d.temperature_2m_max);
+  if(rain<10){loss+=.08;notes.push("low forecast rainfall")}
+  if(hot>=38){loss+=.10;notes.push("high forecast heat")}
+  if(rain>100){loss+=.05;notes.push("heavy rainfall may disrupt field operations")}
+ }else notes.push("weather unavailable; no weather adjustment");
+ if($("water").value==="25")loss+=.12;
+ if($("moisture").value==="15")loss+=.07;
+ if($("moisture").value==="25")loss+=.12;
+ if($("irrigation").value==="18")loss+=.08;
+ if($("heat").value==="18")loss+=.10;
+ if(["Flowering","Grain / fruit filling"].includes($("stage").value))loss+=.04;
+ loss=Math.min(.35,loss);
+ const low=base*(1-loss),revenue=base*p,profit=revenue-c;
+ $("harvestResult").innerHTML='<div class="result"><span class="pill">PLANNING ESTIMATE</span><h3>Baseline: '+base.toLocaleString()+' kg</h3><p>Illustrative stress-adjusted range: <b>'+Math.round(low).toLocaleString()+'–'+Math.round(base).toLocaleString()+' kg</b></p><hr><p>Gross revenue at your entered price: <b>₹'+Math.round(revenue).toLocaleString()+'</b></p><p>Estimated profit before any unentered costs: <b>₹'+Math.round(profit).toLocaleString()+'</b></p><p>Crop: '+$("crop").value+' · Soil: '+$("soil").value+'</p><small>Factors: '+(notes.join(", ")||"no major forecast stress detected")+'. Not a validated yield model. Actual production and prices can differ substantially.</small></div>';
+}
+function previewPhoto(){
+ const f=$("leafPhoto").files[0],img=$("photoPreview");
+ if(!f){img.hidden=true;img.removeAttribute("src");return}
+ if(!f.type.startsWith("image/")){alert("Please choose an image file.");return}
+ if(f.size>8*1024*1024){alert("Choose a photo smaller than 8 MB.");$("leafPhoto").value="";return}
+ const reader=new FileReader();
+ reader.onload=()=>{img.src=reader.result;img.hidden=false};
+ reader.onerror=()=>alert("Cou
