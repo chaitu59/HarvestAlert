@@ -4,40 +4,160 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HarvestAlert</title>
+  <title>HarvestAlert | शेतकरी साथी</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f0f8ed;
-      text-align: center;
-      padding: 25px;
+      background: #eef7e9;
+      color: #203524;
+      margin: 0;
+      padding: 18px;
     }
     .card {
       background: white;
-      padding: 24px;
+      max-width: 480px;
+      margin: 15px auto;
+      padding: 22px;
       border-radius: 16px;
-      max-width: 420px;
-      margin: 20px auto;
+      box-shadow: 0 4px 14px #00000012;
     }
-    button {
-      background: #247a38;
-      color: white;
-      padding: 12px 22px;
-      border: none;
+    h1 { color: #247a38; text-align: center; }
+    .subtitle { text-align: center; }
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: bold;
+    }
+    select, button {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      margin-top: 7px;
       border-radius: 8px;
       font-size: 16px;
     }
+    select { border: 1px solid #aabbaa; background: white; }
+    button {
+      background: #247a38;
+      color: white;
+      border: none;
+      margin-top: 22px;
+      font-weight: bold;
+    }
+    #result {
+      display: none;
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 10px;
+      background: #f0f5ed;
+      line-height: 1.6;
+    }
+    .note { font-size: 13px; color: #526252; }
   </style>
 </head>
 <body>
-  <div class="card">
+  <main class="card">
     <h1>🌱 HarvestAlert</h1>
-    <h2>शेतकरी साथी</h2>
-    <p>Weather and crop risk awareness for farmers.</p>
-    <p>शेतकऱ्यांसाठी हवामान व पीक जोखीम माहिती.</p>
-    <button onclick="alert('Welcome, Farmer! / नमस्कार शेतकरी मित्रा!')">
-      Get Started
-    </button>
-  </div>
+    <p class="subtitle">शेतकरी साथी</p>
+    <p>Check a sample crop risk based on the conditions you select.</p>
+    <p>तुमच्या निवडलेल्या परिस्थितीनुसार पिकाच्या जोखमीची माहिती मिळवा.</p>
+
+    <label for="crop">Select crop / पीक निवडा</label>
+    <select id="crop">
+      <option value="Soybean">Soybean / सोयाबीन</option>
+      <option value="Cotton">Cotton / कापूस</option>
+      <option value="Onion">Onion / कांदा</option>
+      <option value="Wheat">Wheat / गहू</option>
+      <option value="Tomato">Tomato / टोमॅटो</option>
+      <option value="Chickpea">Chickpea / हरभरा</option>
+    </select>
+
+    <label for="stage">Crop stage / पिकाची अवस्था</label>
+    <select id="stage">
+      <option value="growing">Growing / वाढीची अवस्था</option>
+      <option value="flowering">Flowering / फुलोरा</option>
+      <option value="harvest">Near harvest / काढणीची वेळ</option>
+    </select>
+
+    <label for="rain">Expected rain / अपेक्षित पाऊस</label>
+    <select id="rain">
+      <option value="low">Low / कमी</option>
+      <option value="moderate">Moderate / मध्यम</option>
+      <option value="heavy">Heavy / जोरदार</option>
+    </select>
+
+    <label for="soil">Soil moisture / जमिनीतील ओलावा</label>
+    <select id="soil">
+      <option value="dry">Dry / कोरडी</option>
+      <option value="normal">Normal / सामान्य</option>
+      <option value="wet">Wet / ओली</option>
+    </select>
+
+    <button onclick="checkRisk()">Check Crop Risk / जोखीम तपासा</button>
+
+    <section id="result" aria-live="polite"></section>
+
+    <p class="note">
+      Demo only: these sample rules are not a real forecast or validated
+      crop advice. Check local weather alerts and consult an agriculture expert.
+    </p>
+  </main>
+
+  <script>
+    function checkRisk() {
+      const crop = document.getElementById("crop").value;
+      const stage = document.getElementById("stage").value;
+      const rain = document.getElementById("rain").value;
+      const soil = document.getElementById("soil").value;
+
+      let level = "Low";
+      let message = "No major risk identified by this sample rule.";
+      let advice = "Continue monitoring your crop and local weather.";
+
+      if (rain === "heavy" && soil === "wet") {
+        level = "High";
+        message = "Heavy rain together with wet soil may increase waterlogging risk.";
+        advice = "Check field drainage and follow local weather advisories.";
+      } else if (
+        rain === "heavy" &&
+        (stage === "flowering" || stage === "harvest")
+      ) {
+        level = "High";
+        message = "Heavy rain near flowering or harvest may affect crop operations.";
+        advice = "Check official forecasts and ask a local agriculture officer for crop-specific advice.";
+      } else if (rain === "heavy") {
+        level = "Medium";
+        message = "Heavy rain may create field management challenges.";
+        advice = "Monitor drainage and updated weather alerts.";
+      } else if (soil === "dry" && rain === "low") {
+        level = "Medium";
+        message = "Dry soil and low expected rain may indicate moisture stress.";
+        advice = "Check soil moisture and local irrigation recommendations.";
+      } else if (soil === "wet" && rain === "moderate") {
+        level = "Medium";
+        message = "Wet soil with more rain may increase excess-moisture concerns.";
+        advice = "Monitor standing water and field drainage.";
+      } else if (stage === "flowering" && rain === "moderate") {
+        level = "Medium";
+        message = "Rain during flowering may require closer crop monitoring.";
+        advice = "Check local crop guidance and watch for changes in crop condition.";
+      }
+
+      const translations = {
+        Low: "कमी",
+        Medium: "मध्यम",
+        High: "जास्त"
+      };
+
+      document.getElementById("result").style.display = "block";
+      document.getElementById("result").innerHTML =
+        "<h2>🌾 Sample Risk Alert / जोखीम सूचना</h2>" +
+        "<p><b>Crop / पीक:</b> " + crop + "</p>" +
+        "<p><b>Risk / जोखीम:</b> " + level + " / " + translations[level] + "</p>" +
+        "<p>" + message + "</p>" +
+        "<p><b>Suggested next step / पुढील कृती:</b> " + advice + "</p>" +
+        "<p class='note'>This result uses demo rules and your selections only.</p>";
+    }
+  </script>
 </body>
 </html>
