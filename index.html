@@ -2,140 +2,617 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HarvestAlert | Farm Intelligence</title>
-  <link rel="stylesheet" href="assets/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#145c38">
+<meta name="description" content="HarvestAlert - Smart farming, weather forecasts, water risk and crop planning for farmers.">
+<title>HarvestAlert | Smart Farming Assistant</title>
+
+<style>
+:root {
+  --green:#176b43;
+  --dark:#10452d;
+  --light:#eaf5ed;
+  --bg:#f5f8f5;
+  --white:#fff;
+  --text:#26382d;
+  --muted:#718078;
+  --border:#e3ebe5;
+  --orange:#f2a541;
+  --red:#d9534f;
+  --shadow:0 5px 20px rgba(20,70,40,.07);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+}
+header{
+  background:white;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 5%;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 2px 12px #0000000b;
+  gap:15px;
+}
+.logo{font-size:23px;font-weight:800;color:var(--green)}
+.logo span{color:var(--orange)}
+.header-right{display:flex;align-items:center;gap:12px}
+select,button,input{font:inherit}
+.lang{
+  border:1px solid var(--border);
+  padding:8px;
+  border-radius:8px;
+  background:white;
+}
+.menu{
+  border:0;
+  background:var(--green);
+  color:white;
+  padding:9px 13px;
+  border-radius:8px;
+  display:none;
+}
+nav{
+  display:flex;
+  gap:17px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+nav a{
+  text-decoration:none;
+  color:var(--text);
+  font-size:13px;
+  font-weight:700;
+}
+nav a:hover{color:var(--green)}
+.hero{
+  background:linear-gradient(120deg,#103e29,#238451);
+  color:white;
+  padding:48px 7%;
+}
+.hero-inner{max-width:1200px;margin:auto}
+.hero h1{font-size:36px;line-height:1.25;margin-bottom:12px}
+.hero p{max-width:680px;color:#e4f3e8}
+.hero-badge{
+  display:inline-block;
+  background:#ffffff20;
+  padding:6px 12px;
+  border-radius:30px;
+  font-size:12px;
+  margin-bottom:15px;
+}
+.container{max-width:1250px;margin:auto;padding:30px 5%}
+.section{margin-bottom:42px;scroll-margin-top:90px}
+.section-title{
+  font-size:23px;
+  color:var(--dark);
+  margin-bottom:17px;
+}
+.subtitle{color:var(--muted);font-size:14px;margin-top:-10px;margin-bottom:18px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:16px;
+}
+.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+  box-shadow:var(--shadow);
+}
+.card h3{font-size:16px;margin-bottom:10px}
+.card p{font-size:14px;color:var(--muted)}
+.big-number{
+  font-size:29px;
+  color:var(--green);
+  font-weight:800;
+  margin:7px 0;
+}
+.small{font-size:12px;color:var(--muted)}
+.tag{
+  display:inline-block;
+  padding:5px 10px;
+  border-radius:30px;
+  background:var(--light);
+  color:var(--green);
+  font-size:12px;
+  margin-top:10px;
+}
+.warning{background:#fff4df;color:#95600c}
+.danger{background:#fdebea;color:#b33e39}
+.success{background:#e5f5e9;color:#176b43}
+button,.btn{
+  display:inline-block;
+  background:var(--green);
+  color:white;
+  border:0;
+  border-radius:8px;
+  padding:11px 16px;
+  font-weight:700;
+  cursor:pointer;
+  text-decoration:none;
+  margin-top:10px;
+}
+button:hover,.btn:hover{background:var(--dark)}
+button.secondary{background:#eaf5ed;color:var(--green)}
+button.secondary:hover{background:#dceee1}
+input,select,textarea{
+  width:100%;
+  padding:11px;
+  border:1px solid #d6e1d8;
+  border-radius:8px;
+  background:white;
+  margin:6px 0 13px;
+  outline-color:var(--green);
+}
+label{font-size:13px;font-weight:700;display:block}
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:12px;
+}
+.result{
+  display:none;
+  background:var(--light);
+  padding:15px;
+  border-radius:9px;
+  margin-top:14px;
+  font-size:14px;
+  white-space:pre-line;
+}
+.weather-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:10px;
+  margin-top:15px;
+}
+.day{
+  background:#f5faf6;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:13px;
+  text-align:center;
+  font-size:13px;
+}
+.day strong{display:block;color:var(--green);font-size:19px}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:470px;font-size:13px}
+th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:#edf5ef;color:var(--dark)}
+.progress{
+  height:10px;background:#e8eee9;border-radius:20px;overflow:hidden;margin:10px 0
+}
+.progress span{display:block;height:100%;background:var(--green);width:0}
+.notice{
+  border-left:4px solid var(--orange);
+  padding:12px;
+  background:#fff8eb;
+  border-radius:6px;
+  font-size:13px;
+  margin-top:13px;
+}
+.link-card a{color:var(--green);font-weight:bold;font-size:13px}
+footer{
+  background:#103e2b;color:white;text-align:center;
+  padding:30px 15px;font-size:13px;
+}
+footer p{color:#d9e8dd}
+.loading{color:var(--green);font-weight:bold;margin-top:12px}
+.hidden{display:none!important}
+
+@media(max-width:850px){
+  header{flex-wrap:wrap}
+  .menu{display:block}
+  nav{display:none;width:100%;flex-direction:column;align-items:flex-start;padding:10px 0}
+  nav.open{display:flex}
+  nav a{padding:5px 0}
+  .hero h1{font-size:28px}
+}
+@media(max-width:480px){
+  .hero{padding:35px 5%}
+  .container{padding:23px 4%}
+  .section-title{font-size:20px}
+  .card{padding:16px}
+}
+</style>
 </head>
+
 <body>
-  <aside class="sidebar">
-    <a class="brand" href="index.html">🌾 Harvest<span>Alert</span></a>
-    <p class="nav-label">FARM WORKSPACE</p>
-    <nav>
-      <a class="active" href="index.html">▦ Dashboard</a>
-      <a href="weather.html">☀ Weather</a>
-      <a href="water-risk.html">◉ Water Risk</a>
-      <a href="harvest.html">▤ Harvest Planner</a>
-      <a href="crop-health.html">✿ Crop Health</a>
-      <a href="soil.html">♧ Soil Advisor</a>
-      <a href="market.html">₹ Markets & Schemes</a>
-    </nav>
-    <div class="side-note">
-      <span>🌱</span>
-      <h3>Smarter farming starts here</h3>
-      <p>Use weather, field observations and farm records to plan more confidently.</p>
+
+<header>
+  <div class="logo">🌱 Harvest<span>Alert</span></div>
+  <div class="header-right">
+    <select class="lang" id="language" onchange="changeLanguage()">
+      <option value="en">English</option>
+      <option value="mr">मराठी</option>
+    </select>
+    <button class="menu" onclick="toggleMenu()">☰ Menu</button>
+  </div>
+  <nav id="navigation">
+    <a href="#dashboard" data-en="Dashboard" data-mr="डॅशबोर्ड">Dashboard</a>
+    <a href="#weather" data-en="Weather" data-mr="हवामान">Weather</a>
+    <a href="#water" data-en="Water Risk" data-mr="पाणी धोका">Water Risk</a>
+    <a href="#prediction" data-en="Crop Prediction" data-mr="पीक अंदाज">Crop Prediction</a>
+    <a href="#harvest" data-en="Harvest" data-mr="कापणी">Harvest</a>
+    <a href="#health" data-en="Crop Health" data-mr="पीक आरोग्य">Crop Health</a>
+    <a href="#soil" data-en="Soil" data-mr="माती">Soil</a>
+    <a href="#market" data-en="Market" data-mr="बाजारभाव">Market</a>
+    <a href="#schemes" data-en="Schemes" data-mr="योजना">Schemes</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">🌾 SMART AGRICULTURE PLATFORM</span>
+    <h1 data-en="Smarter Farming. Better Harvests." data-mr="स्मार्ट शेती, चांगले उत्पादन.">Smarter Farming. Better Harvests.</h1>
+    <p data-en="A digital farming assistant to monitor weather, understand water risks, plan crops and make better agricultural decisions." data-mr="हवामान, पाण्याचा धोका, पीक नियोजन आणि शेतीविषयक निर्णयांसाठी डिजिटल सहाय्यक.">A digital farming assistant to monitor weather, understand water risks, plan crops and make better agricultural decisions.</p>
+  </div>
+</section>
+
+<main class="container">
+
+<!-- DASHBOARD -->
+<section class="section" id="dashboard">
+<h2 class="section-title" data-en="📊 Farmer Dashboard" data-mr="📊 शेतकरी डॅशबोर्ड">📊 Farmer Dashboard</h2>
+<p class="subtitle" data-en="Your farm information at a glance." data-mr="तुमच्या शेतीची माहिती एकाच ठिकाणी.">Your farm information at a glance.</p>
+
+<div class="grid">
+  <div class="card">
+    <h3>🌤 Weather</h3>
+    <div class="big-number" id="dashTemp">--°C</div>
+    <p id="dashPlace">Enter your location below.</p>
+    <span class="tag" id="dashWeatherStatus">Waiting for weather</span>
+  </div>
+  <div class="card">
+    <h3>💧 Water Risk</h3>
+    <div class="big-number" id="dashWater">--</div>
+    <p>Based on your water and soil inputs.</p>
+  </div>
+  <div class="card">
+    <h3>🌾 Crop Prediction</h3>
+    <div class="big-number" id="dashYield">--</div>
+    <p>Estimated crop production.</p>
+  </div>
+  <div class="card">
+    <h3>📅 Harvest</h3>
+    <div class="big-number" id="dashHarvest">--</div>
+    <p>Estimated harvest date.</p>
+  </div>
+</div>
+</section>
+
+<!-- WEATHER -->
+<section class="section" id="weather">
+<h2 class="section-title">🌤 Weather Forecast</h2>
+<p class="subtitle">Real forecast from Open-Meteo. Internet connection required.</p>
+<div class="card">
+  <h3>Find your farming location</h3>
+  <label>Village / City / District</label>
+  <input id="place" placeholder="Example: Aurangabad, Maharashtra">
+  <button onclick="getWeather()">Get 7-Day Weather</button>
+  <button class="secondary" onclick="useGPS()">📍 Use My Location</button>
+  <div id="weatherLoading" class="loading"></div>
+  <div id="weatherResult" class="result"></div>
+  <div id="weatherDays" class="weather-grid"></div>
+  <div id="weatherAlerts" class="result"></div>
+</div>
+</section>
+
+<!-- WATER -->
+<section class="section" id="water">
+<h2 class="section-title">💧 Water Availability & Drought Risk</h2>
+<p class="subtitle">Enter your farm's water conditions to estimate water stress.</p>
+<div class="card">
+  <div class="form-grid">
+    <div>
+      <label>Irrigation source</label>
+      <select id="waterSource">
+        <option value="well">Well</option>
+        <option value="borewell">Borewell</option>
+        <option value="dam">Dam / Reservoir</option>
+        <option value="rain">Rainwater</option>
+        <option value="canal">Canal</option>
+        <option value="other">Other</option>
+      </select>
     </div>
-    <small class="side-footer">HARVESTALERT · FARM INTELLIGENCE</small>
-  </aside>
-
-  <main class="main">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">YOUR FARM WORKSPACE</p>
-        <h1>Dashboard</h1>
-        <p class="muted">A smarter way to plan your farming decisions.</p>
-      </div>
-      <span class="status">● Planning workspace</span>
-    </header>
-
-    <section class="hero">
-      <div class="hero-content">
-        <span class="tag">GROW SMARTER</span>
-        <h2>Better insights.<br>Healthier harvests.</h2>
-        <p>Explore weather conditions, monitor water stress and estimate your harvest in one place.</p>
-        <a class="button white-button" href="weather.html">Explore weather →</a>
-      </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="sun"></div>
-        <div class="hill hill-a"></div>
-        <div class="hill hill-b"></div>
-        <div class="plant plant-a">♧</div>
-        <div class="plant plant-b">♧</div>
-      </div>
-    </section>
-
-    <div class="section-title">
-      <div>
-        <h2>Your farm tools</h2>
-        <p class="muted">Choose a module to get started.</p>
-      </div>
-      <span class="count">6 MODULES</span>
+    <div>
+      <label>Water available (litres)</label>
+      <input type="number" id="availableWater" min="0" placeholder="Example: 5000">
     </div>
+    <div>
+      <label>Soil moisture (%)</label>
+      <input type="number" id="soilMoisture" min="0" max="100" placeholder="Example: 35">
+    </div>
+    <div>
+      <label>Expected rainfall (mm)</label>
+      <input type="number" id="expectedRain" min="0" placeholder="Example: 10">
+    </div>
+    <div>
+      <label>Farm area (acres)</label>
+      <input type="number" id="waterArea" min="0.01" step="0.01" placeholder="Example: 2">
+    </div>
+  </div>
+  <button onclick="checkWater()">Calculate Water Risk</button>
+  <div class="result" id="waterResult"></div>
+</div>
+</section>
 
-    <section class="tool-grid">
-      <a class="tool-card" href="weather.html">
-        <div class="tool-icon gold">☀</div>
-        <small>WEATHER</small>
-        <h3>Weather Outlook</h3>
-        <p>Check a seven-day forecast for your area.</p>
-        <b>View forecast →</b>
-      </a>
-      <a class="tool-card" href="water-risk.html">
-        <div class="tool-icon blue">◉</div>
-        <small>WATER MANAGEMENT</small>
-        <h3>Water Risk</h3>
-        <p>Screen for possible crop water stress.</p>
-        <b>Check risk →</b>
-      </a>
-      <a class="tool-card" href="harvest.html">
-        <div class="tool-icon green">▤</div>
-        <small>PLANNING</small>
-        <h3>Harvest Planner</h3>
-        <p>Estimate crop yield, revenue and costs.</p>
-        <b>Plan harvest →</b>
-      </a>
-      <a class="tool-card" href="crop-health.html">
-        <div class="tool-icon pink">✿</div>
-        <small>CROP CARE</small>
-        <h3>Crop Health</h3>
-        <p>Record crop symptoms and preview a photo.</p>
-        <b>Record symptoms →</b>
-      </a>
-      <a class="tool-card" href="soil.html">
-        <div class="tool-icon earth">♧</div>
-        <small>SOIL MANAGEMENT</small>
-        <h3>Soil Advisor</h3>
-        <p>Explore general soil-care guidance.</p>
-        <b>Explore guidance →</b>
-      </a>
-      <a class="tool-card" href="market.html">
-        <div class="tool-icon purple">₹</div>
-        <small>FARMER RESOURCES</small>
-        <h3>Markets & Schemes</h3>
-        <p>Find market information and official portals.</p>
-        <b>View resources →</b>
-      </a>
-    </section>
+<!-- CROP PREDICTION -->
+<section class="section" id="prediction">
+<h2 class="section-title">🌾 Full Crop Prediction</h2>
+<p class="subtitle">Estimate yield and quality using your farm inputs and available weather information.</p>
+<div class="card">
+  <div class="form-grid">
+    <div>
+      <label>Choose crop</label>
+      <select id="crop">
+        <option value="Soybean">Soybean</option>
+        <option value="Cotton">Cotton</option>
+        <option value="Wheat">Wheat</option>
+        <option value="Maize">Maize</option>
+        <option value="Rice">Rice</option>
+        <option value="Pigeon pea">Pigeon pea (Tur)</option>
+        <option value="Chickpea">Chickpea (Chana)</option>
+        <option value="Groundnut">Groundnut</option>
+        <option value="Onion">Onion</option>
+      </select>
+    </div>
+    <div>
+      <label>Farm area (acres)</label>
+      <input type="number" id="area" min="0.01" step="0.01" placeholder="Example: 2">
+    </div>
+    <div>
+      <label>Previous yield (quintals per acre)</label>
+      <input type="number" id="previousYield" min="0" step="0.1" placeholder="Example: 7">
+    </div>
+    <div>
+      <label>Soil type</label>
+      <select id="soilType">
+        <option>Black soil</option>
+        <option>Red soil</option>
+        <option>Alluvial soil</option>
+        <option>Clay soil</option>
+        <option>Sandy soil</option>
+        <option>Loamy soil</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div>
+      <label>Crop condition</label>
+      <select id="cropCondition">
+        <option value="good">Good</option>
+        <option value="average">Average</option>
+        <option value="poor">Poor</option>
+      </select>
+    </div>
+    <div>
+      <label>Water availability</label>
+      <select id="cropWater">
+        <option value="good">Sufficient</option>
+        <option value="medium">Limited</option>
+        <option value="poor">Very low</option>
+      </select>
+    </div>
+    <div>
+      <label>Fertilizer management</label>
+      <select id="fertilizer">
+        <option value="good">As per soil test</option>
+        <option value="average">Basic application</option>
+        <option value="poor">Not managed</option>
+      </select>
+    </div>
+    <div>
+      <label>Rainfall conditions</label>
+      <select id="rainCondition">
+        <option value="normal">Normal</option>
+        <option value="low">Low rainfall</option>
+        <option value="high">Excess rainfall</option>
+      </select>
+    </div>
+  </div>
+  <button onclick="predictCrop()">Predict Crop Yield & Quality</button>
+  <div id="predictionResult" class="result"></div>
+  <div class="notice">Prediction is an approximate educational estimate based on the values you enter. It is not a scientifically validated crop-yield model or a guarantee.</div>
+</div>
+</section>
 
-    <section class="panel">
-      <div class="section-title">
-        <div>
-          <h2>Quick farm profile</h2>
-          <p class="muted">Enter details to display a farm summary.</p>
-        </div>
-      </div>
-      <form id="profile-form" class="form-grid">
-        <label>Farm or village name
-          <input id="farm-name" placeholder="e.g. My farm, Paithan">
-        </label>
-        <label>Main crop
-          <select id="farm-crop">
-            <option value="">Choose a crop</option>
-            <option>Cotton</option><option>Soybean</option>
-            <option>Maize</option><option>Wheat</option>
-            <option>Jowar</option><option>Onion</option><option>Other</option>
-          </select>
-        </label>
-        <label>Farm area (acres)
-          <input id="farm-area" type="number" min="0" step="0.1" placeholder="e.g. 2.5">
-        </label>
-        <button class="button primary-button" type="submit">Show farm summary</button>
-      </form>
-      <div id="profile-result" class="result hidden"></div>
-    </section>
+<!-- HARVEST -->
+<section class="section" id="harvest">
+<h2 class="section-title">📅 Harvest Planner</h2>
+<div class="card">
+  <h3>Calculate expected harvest date</h3>
+  <div class="form-grid">
+    <div>
+      <label>Crop</label>
+      <select id="harvestCrop">
+        <option value="90">Soybean — 90 days (example)</option>
+        <option value="150">Cotton — 150 days (example)</option>
+        <option value="120">Wheat — 120 days (example)</option>
+        <option value="110">Maize — 110 days (example)</option>
+        <option value="120">Rice — 120 days (example)</option>
+        <option value="150">Pigeon pea — 150 days (example)</option>
+        <option value="110">Chickpea — 110 days (example)</option>
+        <option value="120">Groundnut — 120 days (example)</option>
+      </select>
+    </div>
+    <div>
+      <label>Sowing date</label>
+      <input type="date" id="sowingDate">
+    </div>
+  </div>
+  <button onclick="calculateHarvest()">Calculate Harvest Date</button>
+  <div id="harvestResult" class="result"></div>
+</div>
+</section>
 
-    <footer>© 2026 HarvestAlert <span>Built for informed farm decisions</span></footer>
-  </main>
-  <script src="assets/app.js"></script>
-</body>
-</html>
+<!-- CROP HEALTH -->
+<section class="section" id="health">
+<h2 class="section-title">🩺 Crop Health Checker</h2>
+<div class="card">
+  <div class="form-grid">
+    <div>
+      <label>Crop name</label>
+      <input id="healthCrop" placeholder="Enter crop name">
+    </div>
+    <div>
+      <label>Visible symptom</label>
+      <select id="symptom">
+        <option value="yellow">Yellow leaves</option>
+        <option value="spots">Brown / black spots</option>
+        <option value="wilting">Wilting</option>
+        <option value="holes">Holes in leaves</option>
+        <option value="white">White powder on leaves</option>
+        <option value="stunted">Slow growth</option>
+        <option value="root">Root damage</option>
+      </select>
+    </div>
+  </div>
+  <button onclick="checkHealth()">Check Crop Symptoms</button>
+  <div id="healthResult" class="result"></div>
+  <div class="notice">This tool provides general guidance, not disease identification. Consult an agricultural officer before using pesticides or other treatments.</div>
+</div>
+</section>
+
+<!-- SOIL -->
+<section class="section" id="soil">
+<h2 class="section-title">🪴 Soil Information & Guidance</h2>
+<div class="card">
+  <label>Select your soil type</label>
+  <select id="soilGuide">
+    <option value="black">Black soil</option>
+    <option value="red">Red soil</option>
+    <option value="alluvial">Alluvial soil</option>
+    <option value="sandy">Sandy soil</option>
+    <option value="clay">Clay soil</option>
+    <option value="loamy">Loamy soil</option>
+  </select>
+  <button onclick="soilAdvice()">Get Soil Guidance</button>
+  <div id="soilResult" class="result"></div>
+  <div class="notice">For accurate fertilizer recommendations, get your field soil tested for pH and nutrients.</div>
+</div>
+</section>
+
+<!-- MARKET -->
+<section class="section" id="market">
+<h2 class="section-title">📈 Agricultural Market Information</h2>
+<div class="card">
+  <h3>Check official market prices</h3>
+  <p>Market prices vary by mandi, date, crop quality and location. Use these official sources for current information.</p>
+  <div class="grid" style="margin-top:15px">
+    <div class="card link-card">
+      <h3>Agmarknet</h3>
+      <p>Government mandi price information.</p>
+      <a href="https://agmarknet.gov.in/" target="_blank" rel="noopener">Visit Agmarknet ↗</a>
+    </div>
+    <div class="card link-card">
+      <h3>e-NAM</h3>
+      <p>National agricultural market platform.</p>
+      <a href="https://enam.gov.in/" target="_blank" rel="noopener">Visit e-NAM ↗</a>
+    </div>
+    <div class="card link-card">
+      <h3>MSAMB</h3>
+      <p>Maharashtra State Agricultural Marketing Board.</p>
+      <a href="https://www.msamb.com/" target="_blank" rel="noopener">Visit MSAMB ↗</a>
+    </div>
+  </div>
+  <div class="notice">No live mandi price is displayed inside this version. Always verify the current price at your local mandi.</div>
+</div>
+</section>
+
+<!-- SCHEMES -->
+<section class="section" id="schemes">
+<h2 class="section-title">🏛 Government Schemes & Farmer Resources</h2>
+<div class="grid">
+  <div class="card link-card">
+    <h3>PM-KISAN</h3>
+    <p>Farmer income support scheme information.</p>
+    <a href="https://pmkisan.gov.in/" target="_blank" rel="noopener">Official website ↗</a>
+  </div>
+  <div class="card link-card">
+    <h3>Soil Health Card</h3>
+    <p>Soil testing and nutrient information.</p>
+    <a href="https://soilhealth.dac.gov.in/" target="_blank" rel="noopener">Official website ↗</a>
+  </div>
+  <div class="card link-card">
+    <h3>PM Fasal Bima Yojana</h3>
+    <p>Crop insurance scheme information.</p>
+    <a href="https://pmfby.gov.in/" target="_blank" rel="noopener">Official website ↗</a>
+  </div>
+  <div class="card link-card">
+    <h3>Farmer Portal</h3>
+    <p>Government agriculture information and services.</p>
+    <a href="https://farmer.gov.in/" target="_blank" rel="noopener">Official website ↗</a>
+  </div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+<h2 class="section-title">ℹ️ About HarvestAlert</h2>
+<div class="card">
+  <h3>Our purpose</h3>
+  <p>HarvestAlert is an educational smart-farming platform designed to help farmers understand weather conditions, water availability, crop planning, harvest estimates and agricultural resources.</p>
+  <p style="margin-top:10px">It combines actual weather forecasts with farmer-provided information and clearly labelled planning estimates.</p>
+  <span class="tag">Smart Agriculture Project</span>
+</div>
+</section>
+
+</main>
+
+<footer>
+  <h3>🌱 HarvestAlert</h3>
+  <p>Smart Farming • Better Planning • Better Harvests</p>
+  <p>Educational project | © 2026 HarvestAlert</p>
+</footer>
+
+<script>
+let latestWeather = null;
+let currentPlace = "";
+let language = "en";
+
+function toggleMenu(){
+  document.getElementById("navigation").classList.toggle("open");
+}
+
+function changeLanguage(){
+  language=document.getElementById("language").value;
+  document.documentElement.lang=language;
+  document.querySelectorAll("[data-en]").forEach(el=>{
+    el.textContent=el.getAttribute("data-"+language);
+  });
+}
+
+function showResult(id,text){
+  const el=document.getElementById(id);
+  el.style.display="block";
+  el.textContent=text;
+}
+
+function numberValue(id){
+  return Number(document.getElementById(id).value);
+}
+
+// REAL WEATHER USING OPEN-METEO
+async function getWeather(){
+  const place=document.getElementById("place").value.trim();
+  if(!place){alert("Please enter a village or city.");return;}
+  await weatherForPlace(place);
+}
+
+async function weatherForPlace(place){
+  const loading=document.getElementById("weatherLoading");
+  const daysBox=document.getElementById("weatherDays");
+  loading.textContent="Searching location and loading forecast...";
+  daysBox.innerHTML="";
+  document.getElementById("weatherAlerts").style.display="none";
+  try{
+    const geoURL="https://geocoding-api.open-meteo.com/v1/search?name="+encodeURICompo
