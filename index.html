@@ -1,618 +1,415 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#145c38">
-<meta name="description" content="HarvestAlert - Smart farming, weather forecasts, water risk and crop planning for farmers.">
-<title>HarvestAlert | Smart Farming Assistant</title>
-
-<style>
-:root {
-  --green:#176b43;
-  --dark:#10452d;
-  --light:#eaf5ed;
-  --bg:#f5f8f5;
-  --white:#fff;
-  --text:#26382d;
-  --muted:#718078;
-  --border:#e3ebe5;
-  --orange:#f2a541;
-  --red:#d9534f;
-  --shadow:0 5px 20px rgba(20,70,40,.07);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.6;
-}
-header{
-  background:white;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:13px 5%;
-  position:sticky;
-  top:0;
-  z-index:100;
-  box-shadow:0 2px 12px #0000000b;
-  gap:15px;
-}
-.logo{font-size:23px;font-weight:800;color:var(--green)}
-.logo span{color:var(--orange)}
-.header-right{display:flex;align-items:center;gap:12px}
-select,button,input{font:inherit}
-.lang{
-  border:1px solid var(--border);
-  padding:8px;
-  border-radius:8px;
-  background:white;
-}
-.menu{
-  border:0;
-  background:var(--green);
-  color:white;
-  padding:9px 13px;
-  border-radius:8px;
-  display:none;
-}
-nav{
-  display:flex;
-  gap:17px;
-  flex-wrap:wrap;
-  align-items:center;
-}
-nav a{
-  text-decoration:none;
-  color:var(--text);
-  font-size:13px;
-  font-weight:700;
-}
-nav a:hover{color:var(--green)}
-.hero{
-  background:linear-gradient(120deg,#103e29,#238451);
-  color:white;
-  padding:48px 7%;
-}
-.hero-inner{max-width:1200px;margin:auto}
-.hero h1{font-size:36px;line-height:1.25;margin-bottom:12px}
-.hero p{max-width:680px;color:#e4f3e8}
-.hero-badge{
-  display:inline-block;
-  background:#ffffff20;
-  padding:6px 12px;
-  border-radius:30px;
-  font-size:12px;
-  margin-bottom:15px;
-}
-.container{max-width:1250px;margin:auto;padding:30px 5%}
-.section{margin-bottom:42px;scroll-margin-top:90px}
-.section-title{
-  font-size:23px;
-  color:var(--dark);
-  margin-bottom:17px;
-}
-.subtitle{color:var(--muted);font-size:14px;margin-top:-10px;margin-bottom:18px}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
-  gap:16px;
-}
-.card{
-  background:white;
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:20px;
-  box-shadow:var(--shadow);
-}
-.card h3{font-size:16px;margin-bottom:10px}
-.card p{font-size:14px;color:var(--muted)}
-.big-number{
-  font-size:29px;
-  color:var(--green);
-  font-weight:800;
-  margin:7px 0;
-}
-.small{font-size:12px;color:var(--muted)}
-.tag{
-  display:inline-block;
-  padding:5px 10px;
-  border-radius:30px;
-  background:var(--light);
-  color:var(--green);
-  font-size:12px;
-  margin-top:10px;
-}
-.warning{background:#fff4df;color:#95600c}
-.danger{background:#fdebea;color:#b33e39}
-.success{background:#e5f5e9;color:#176b43}
-button,.btn{
-  display:inline-block;
-  background:var(--green);
-  color:white;
-  border:0;
-  border-radius:8px;
-  padding:11px 16px;
-  font-weight:700;
-  cursor:pointer;
-  text-decoration:none;
-  margin-top:10px;
-}
-button:hover,.btn:hover{background:var(--dark)}
-button.secondary{background:#eaf5ed;color:var(--green)}
-button.secondary:hover{background:#dceee1}
-input,select,textarea{
-  width:100%;
-  padding:11px;
-  border:1px solid #d6e1d8;
-  border-radius:8px;
-  background:white;
-  margin:6px 0 13px;
-  outline-color:var(--green);
-}
-label{font-size:13px;font-weight:700;display:block}
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:12px;
-}
-.result{
-  display:none;
-  background:var(--light);
-  padding:15px;
-  border-radius:9px;
-  margin-top:14px;
-  font-size:14px;
-  white-space:pre-line;
-}
-.weather-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:10px;
-  margin-top:15px;
-}
-.day{
-  background:#f5faf6;
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:13px;
-  text-align:center;
-  font-size:13px;
-}
-.day strong{display:block;color:var(--green);font-size:19px}
-.table-wrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:470px;font-size:13px}
-th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border)}
-th{background:#edf5ef;color:var(--dark)}
-.progress{
-  height:10px;background:#e8eee9;border-radius:20px;overflow:hidden;margin:10px 0
-}
-.progress span{display:block;height:100%;background:var(--green);width:0}
-.notice{
-  border-left:4px solid var(--orange);
-  padding:12px;
-  background:#fff8eb;
-  border-radius:6px;
-  font-size:13px;
-  margin-top:13px;
-}
-.link-card a{color:var(--green);font-weight:bold;font-size:13px}
-footer{
-  background:#103e2b;color:white;text-align:center;
-  padding:30px 15px;font-size:13px;
-}
-footer p{color:#d9e8dd}
-.loading{color:var(--green);font-weight:bold;margin-top:12px}
-.hidden{display:none!important}
-
-@media(max-width:850px){
-  header{flex-wrap:wrap}
-  .menu{display:block}
-  nav{display:none;width:100%;flex-direction:column;align-items:flex-start;padding:10px 0}
-  nav.open{display:flex}
-  nav a{padding:5px 0}
-  .hero h1{font-size:28px}
-}
-@media(max-width:480px){
-  .hero{padding:35px 5%}
-  .container{padding:23px 4%}
-  .section-title{font-size:20px}
-  .card{padding:16px}
-}
-</style>
-</head>
-
-<body>
-
-<header>
-  <div class="logo">🌱 Harvest<span>Alert</span></div>
-  <div class="header-right">
-    <select class="lang" id="language" onchange="changeLanguage()">
-      <option value="en">English</option>
-      <option value="mr">मराठी</option>
-    </select>
-    <button class="menu" onclick="toggleMenu()">☰ Menu</button>
-  </div>
-  <nav id="navigation">
-    <a href="#dashboard" data-en="Dashboard" data-mr="डॅशबोर्ड">Dashboard</a>
-    <a href="#weather" data-en="Weather" data-mr="हवामान">Weather</a>
-    <a href="#water" data-en="Water Risk" data-mr="पाणी धोका">Water Risk</a>
-    <a href="#prediction" data-en="Crop Prediction" data-mr="पीक अंदाज">Crop Prediction</a>
-    <a href="#harvest" data-en="Harvest" data-mr="कापणी">Harvest</a>
-    <a href="#health" data-en="Crop Health" data-mr="पीक आरोग्य">Crop Health</a>
-    <a href="#soil" data-en="Soil" data-mr="माती">Soil</a>
-    <a href="#market" data-en="Market" data-mr="बाजारभाव">Market</a>
-    <a href="#schemes" data-en="Schemes" data-mr="योजना">Schemes</a>
-  </nav>
-</header>
-
-<section class="hero">
-  <div class="hero-inner">
-    <span class="hero-badge">🌾 SMART AGRICULTURE PLATFORM</span>
-    <h1 data-en="Smarter Farming. Better Harvests." data-mr="स्मार्ट शेती, चांगले उत्पादन.">Smarter Farming. Better Harvests.</h1>
-    <p data-en="A digital farming assistant to monitor weather, understand water risks, plan crops and make better agricultural decisions." data-mr="हवामान, पाण्याचा धोका, पीक नियोजन आणि शेतीविषयक निर्णयांसाठी डिजिटल सहाय्यक.">A digital farming assistant to monitor weather, understand water risks, plan crops and make better agricultural decisions.</p>
-  </div>
-</section>
-
-<main class="container">
-
-<!-- DASHBOARD -->
-<section class="section" id="dashboard">
-<h2 class="section-title" data-en="📊 Farmer Dashboard" data-mr="📊 शेतकरी डॅशबोर्ड">📊 Farmer Dashboard</h2>
-<p class="subtitle" data-en="Your farm information at a glance." data-mr="तुमच्या शेतीची माहिती एकाच ठिकाणी.">Your farm information at a glance.</p>
-
-<div class="grid">
-  <div class="card">
-    <h3>🌤 Weather</h3>
-    <div class="big-number" id="dashTemp">--°C</div>
-    <p id="dashPlace">Enter your location below.</p>
-    <span class="tag" id="dashWeatherStatus">Waiting for weather</span>
-  </div>
-  <div class="card">
-    <h3>💧 Water Risk</h3>
-    <div class="big-number" id="dashWater">--</div>
-    <p>Based on your water and soil inputs.</p>
-  </div>
-  <div class="card">
-    <h3>🌾 Crop Prediction</h3>
-    <div class="big-number" id="dashYield">--</div>
-    <p>Estimated crop production.</p>
-  </div>
-  <div class="card">
-    <h3>📅 Harvest</h3>
-    <div class="big-number" id="dashHarvest">--</div>
-    <p>Estimated harvest date.</p>
-  </div>
-</div>
-</section>
-
-<!-- WEATHER -->
-<section class="section" id="weather">
-<h2 class="section-title">🌤 Weather Forecast</h2>
-<p class="subtitle">Real forecast from Open-Meteo. Internet connection required.</p>
-<div class="card">
-  <h3>Find your farming location</h3>
-  <label>Village / City / District</label>
-  <input id="place" placeholder="Example: Aurangabad, Maharashtra">
-  <button onclick="getWeather()">Get 7-Day Weather</button>
-  <button class="secondary" onclick="useGPS()">📍 Use My Location</button>
-  <div id="weatherLoading" class="loading"></div>
-  <div id="weatherResult" class="result"></div>
-  <div id="weatherDays" class="weather-grid"></div>
-  <div id="weatherAlerts" class="result"></div>
-</div>
-</section>
-
-<!-- WATER -->
-<section class="section" id="water">
-<h2 class="section-title">💧 Water Availability & Drought Risk</h2>
-<p class="subtitle">Enter your farm's water conditions to estimate water stress.</p>
-<div class="card">
-  <div class="form-grid">
-    <div>
-      <label>Irrigation source</label>
-      <select id="waterSource">
-        <option value="well">Well</option>
-        <option value="borewell">Borewell</option>
-        <option value="dam">Dam / Reservoir</option>
-        <option value="rain">Rainwater</option>
-        <option value="canal">Canal</option>
-        <option value="other">Other</option>
-      </select>
-    </div>
-    <div>
-      <label>Water available (litres)</label>
-      <input type="number" id="availableWater" min="0" placeholder="Example: 5000">
-    </div>
-    <div>
-      <label>Soil moisture (%)</label>
-      <input type="number" id="soilMoisture" min="0" max="100" placeholder="Example: 35">
-    </div>
-    <div>
-      <label>Expected rainfall (mm)</label>
-      <input type="number" id="expectedRain" min="0" placeholder="Example: 10">
-    </div>
-    <div>
-      <label>Farm area (acres)</label>
-      <input type="number" id="waterArea" min="0.01" step="0.01" placeholder="Example: 2">
-    </div>
-  </div>
-  <button onclick="checkWater()">Calculate Water Risk</button>
-  <div class="result" id="waterResult"></div>
-</div>
-</section>
-
-<!-- CROP PREDICTION -->
-<section class="section" id="prediction">
-<h2 class="section-title">🌾 Full Crop Prediction</h2>
-<p class="subtitle">Estimate yield and quality using your farm inputs and available weather information.</p>
-<div class="card">
-  <div class="form-grid">
-    <div>
-      <label>Choose crop</label>
-      <select id="crop">
-        <option value="Soybean">Soybean</option>
-        <option value="Cotton">Cotton</option>
-        <option value="Wheat">Wheat</option>
-        <option value="Maize">Maize</option>
-        <option value="Rice">Rice</option>
-        <option value="Pigeon pea">Pigeon pea (Tur)</option>
-        <option value="Chickpea">Chickpea (Chana)</option>
-        <option value="Groundnut">Groundnut</option>
-        <option value="Onion">Onion</option>
-      </select>
-    </div>
-    <div>
-      <label>Farm area (acres)</label>
-      <input type="number" id="area" min="0.01" step="0.01" placeholder="Example: 2">
-    </div>
-    <div>
-      <label>Previous yield (quintals per acre)</label>
-      <input type="number" id="previousYield" min="0" step="0.1" placeholder="Example: 7">
-    </div>
-    <div>
-      <label>Soil type</label>
-      <select id="soilType">
-        <option>Black soil</option>
-        <option>Red soil</option>
-        <option>Alluvial soil</option>
-        <option>Clay soil</option>
-        <option>Sandy soil</option>
-        <option>Loamy soil</option>
-        <option>Other</option>
-      </select>
-    </div>
-    <div>
-      <label>Crop condition</label>
-      <select id="cropCondition">
-        <option value="good">Good</option>
-        <option value="average">Average</option>
-        <option value="poor">Poor</option>
-      </select>
-    </div>
-    <div>
-      <label>Water availability</label>
-      <select id="cropWater">
-        <option value="good">Sufficient</option>
-        <option value="medium">Limited</option>
-        <option value="poor">Very low</option>
-      </select>
-    </div>
-    <div>
-      <label>Fertilizer management</label>
-      <select id="fertilizer">
-        <option value="good">As per soil test</option>
-        <option value="average">Basic application</option>
-        <option value="poor">Not managed</option>
-      </select>
-    </div>
-    <div>
-      <label>Rainfall conditions</label>
-      <select id="rainCondition">
-        <option value="normal">Normal</option>
-        <option value="low">Low rainfall</option>
-        <option value="high">Excess rainfall</option>
-      </select>
-    </div>
-  </div>
-  <button onclick="predictCrop()">Predict Crop Yield & Quality</button>
-  <div id="predictionResult" class="result"></div>
-  <div class="notice">Prediction is an approximate educational estimate based on the values you enter. It is not a scientifically validated crop-yield model or a guarantee.</div>
-</div>
-</section>
-
-<!-- HARVEST -->
-<section class="section" id="harvest">
-<h2 class="section-title">📅 Harvest Planner</h2>
-<div class="card">
-  <h3>Calculate expected harvest date</h3>
-  <div class="form-grid">
-    <div>
-      <label>Crop</label>
-      <select id="harvestCrop">
-        <option value="90">Soybean — 90 days (example)</option>
-        <option value="150">Cotton — 150 days (example)</option>
-        <option value="120">Wheat — 120 days (example)</option>
-        <option value="110">Maize — 110 days (example)</option>
-        <option value="120">Rice — 120 days (example)</option>
-        <option value="150">Pigeon pea — 150 days (example)</option>
-        <option value="110">Chickpea — 110 days (example)</option>
-        <option value="120">Groundnut — 120 days (example)</option>
-      </select>
-    </div>
-    <div>
-      <label>Sowing date</label>
-      <input type="date" id="sowingDate">
-    </div>
-  </div>
-  <button onclick="calculateHarvest()">Calculate Harvest Date</button>
-  <div id="harvestResult" class="result"></div>
-</div>
-</section>
-
-<!-- CROP HEALTH -->
-<section class="section" id="health">
-<h2 class="section-title">🩺 Crop Health Checker</h2>
-<div class="card">
-  <div class="form-grid">
-    <div>
-      <label>Crop name</label>
-      <input id="healthCrop" placeholder="Enter crop name">
-    </div>
-    <div>
-      <label>Visible symptom</label>
-      <select id="symptom">
-        <option value="yellow">Yellow leaves</option>
-        <option value="spots">Brown / black spots</option>
-        <option value="wilting">Wilting</option>
-        <option value="holes">Holes in leaves</option>
-        <option value="white">White powder on leaves</option>
-        <option value="stunted">Slow growth</option>
-        <option value="root">Root damage</option>
-      </select>
-    </div>
-  </div>
-  <button onclick="checkHealth()">Check Crop Symptoms</button>
-  <div id="healthResult" class="result"></div>
-  <div class="notice">This tool provides general guidance, not disease identification. Consult an agricultural officer before using pesticides or other treatments.</div>
-</div>
-</section>
-
-<!-- SOIL -->
-<section class="section" id="soil">
-<h2 class="section-title">🪴 Soil Information & Guidance</h2>
-<div class="card">
-  <label>Select your soil type</label>
-  <select id="soilGuide">
-    <option value="black">Black soil</option>
-    <option value="red">Red soil</option>
-    <option value="alluvial">Alluvial soil</option>
-    <option value="sandy">Sandy soil</option>
-    <option value="clay">Clay soil</option>
-    <option value="loamy">Loamy soil</option>
-  </select>
-  <button onclick="soilAdvice()">Get Soil Guidance</button>
-  <div id="soilResult" class="result"></div>
-  <div class="notice">For accurate fertilizer recommendations, get your field soil tested for pH and nutrients.</div>
-</div>
-</section>
-
-<!-- MARKET -->
-<section class="section" id="market">
-<h2 class="section-title">📈 Agricultural Market Information</h2>
-<div class="card">
-  <h3>Check official market prices</h3>
-  <p>Market prices vary by mandi, date, crop quality and location. Use these official sources for current information.</p>
-  <div class="grid" style="margin-top:15px">
-    <div class="card link-card">
-      <h3>Agmarknet</h3>
-      <p>Government mandi price information.</p>
-      <a href="https://agmarknet.gov.in/" target="_blank" rel="noopener">Visit Agmarknet ↗</a>
-    </div>
-    <div class="card link-card">
-      <h3>e-NAM</h3>
-      <p>National agricultural market platform.</p>
-      <a href="https://enam.gov.in/" target="_blank" rel="noopener">Visit e-NAM ↗</a>
-    </div>
-    <div class="card link-card">
-      <h3>MSAMB</h3>
-      <p>Maharashtra State Agricultural Marketing Board.</p>
-      <a href="https://www.msamb.com/" target="_blank" rel="noopener">Visit MSAMB ↗</a>
-    </div>
-  </div>
-  <div class="notice">No live mandi price is displayed inside this version. Always verify the current price at your local mandi.</div>
-</div>
-</section>
-
-<!-- SCHEMES -->
-<section class="section" id="schemes">
-<h2 class="section-title">🏛 Government Schemes & Farmer Resources</h2>
-<div class="grid">
-  <div class="card link-card">
-    <h3>PM-KISAN</h3>
-    <p>Farmer income support scheme information.</p>
-    <a href="https://pmkisan.gov.in/" target="_blank" rel="noopener">Official website ↗</a>
-  </div>
-  <div class="card link-card">
-    <h3>Soil Health Card</h3>
-    <p>Soil testing and nutrient information.</p>
-    <a href="https://soilhealth.dac.gov.in/" target="_blank" rel="noopener">Official website ↗</a>
-  </div>
-  <div class="card link-card">
-    <h3>PM Fasal Bima Yojana</h3>
-    <p>Crop insurance scheme information.</p>
-    <a href="https://pmfby.gov.in/" target="_blank" rel="noopener">Official website ↗</a>
-  </div>
-  <div class="card link-card">
-    <h3>Farmer Portal</h3>
-    <p>Government agriculture information and services.</p>
-    <a href="https://farmer.gov.in/" target="_blank" rel="noopener">Official website ↗</a>
-  </div>
-</div>
-</section>
-
-<!-- ABOUT -->
-<section class="section" id="about">
-<h2 class="section-title">ℹ️ About HarvestAlert</h2>
-<div class="card">
-  <h3>Our purpose</h3>
-  <p>HarvestAlert is an educational smart-farming platform designed to help farmers understand weather conditions, water availability, crop planning, harvest estimates and agricultural resources.</p>
-  <p style="margin-top:10px">It combines actual weather forecasts with farmer-provided information and clearly labelled planning estimates.</p>
-  <span class="tag">Smart Agriculture Project</span>
-</div>
-</section>
-
-</main>
-
-<footer>
-  <h3>🌱 HarvestAlert</h3>
-  <p>Smart Farming • Better Planning • Better Harvests</p>
-  <p>Educational project | © 2026 HarvestAlert</p>
-</footer>
-
 <script>
-let latestWeather = null;
-let currentPlace = "";
-let language = "en";
+"use strict";
 
-function toggleMenu(){
-  document.getElementById("navigation").classList.toggle("open");
+// Safe helper for displaying results
+function showResult(id, message) {
+  const el = document.getElementById(id);
+  if (!el) {
+    alert("Website error: missing result area " + id);
+    return;
+  }
+  el.textContent = message;
+  el.style.display = "block";
 }
 
-function changeLanguage(){
-  language=document.getElementById("language").value;
-  document.documentElement.lang=language;
-  document.querySelectorAll("[data-en]").forEach(el=>{
-    el.textContent=el.getAttribute("data-"+language);
+function getValue(id) {
+  const el = document.getElementById(id);
+  return el ? el.value.trim() : "";
+}
+
+function getNumber(id) {
+  return Number(getValue(id));
+}
+
+// MOBILE MENU
+function toggleMenu() {
+  const nav = document.getElementById("navigation");
+  if (nav) nav.classList.toggle("open");
+}
+
+// LANGUAGE
+function changeLanguage() {
+  const language = getValue("language") || "en";
+  document.documentElement.lang = language;
+
+  document.querySelectorAll("[data-en]").forEach(function(el) {
+    el.textContent = el.getAttribute("data-" + language);
   });
 }
 
-function showResult(id,text){
-  const el=document.getElementById(id);
-  el.style.display="block";
-  el.textContent=text;
+// WEATHER
+async function getWeather() {
+  const place = getValue("place");
+  if (!place) {
+    alert("Enter your village or city.");
+    return;
+  }
+
+  const loading = document.getElementById("weatherLoading");
+  loading.textContent = "Searching for location...";
+
+  try {
+    const geoURL =
+      "https://geocoding-api.open-meteo.com/v1/search?name=" +
+      encodeURIComponent(place) + "&count=1&language=en&format=json";
+
+    const geoResponse = await fetch(geoURL);
+    if (!geoResponse.ok) throw new Error("Location service unavailable");
+
+    const geo = await geoResponse.json();
+    if (!geo.results || !geo.results.length) {
+      throw new Error("Location not found. Try another name.");
+    }
+
+    const loc = geo.results[0];
+    await loadForecast(
+      loc.latitude,
+      loc.longitude,
+      loc.name + ", " + (loc.admin1 || loc.country)
+    );
+
+  } catch (error) {
+    loading.textContent = error.message;
+  }
 }
 
-function numberValue(id){
-  return Number(document.getElementById(id).value);
+async function loadForecast(lat, lon, place) {
+  const loading = document.getElementById("weatherLoading");
+  loading.textContent = "Loading forecast...";
+
+  try {
+    const url =
+      "https://api.open-meteo.com/v1/forecast?latitude=" + lat +
+      "&longitude=" + lon +
+      "&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code" +
+      "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max" +
+      "&forecast_days=7&timezone=auto";
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Weather service unavailable");
+
+    const data = await response.json();
+    if (!data.current || !data.daily) throw new Error("Invalid weather data");
+
+    document.getElementById("dashTemp").textContent =
+      data.current.temperature_2m + "°C";
+
+    document.getElementById("dashPlace").textContent = place;
+
+    document.getElementById("dashWeatherStatus").textContent =
+      weatherDescription(data.current.weather_code);
+
+    showResult(
+      "weatherResult",
+      "Location: " + place +
+      "\nTemperature: " + data.current.temperature_2m + "°C" +
+      "\nHumidity: " + data.current.relative_humidity_2m + "%" +
+      "\nWind: " + data.current.wind_speed_10m + " km/h" +
+      "\nCondition: " + weatherDescription(data.current.weather_code)
+    );
+
+    const box = document.getElementById("weatherDays");
+    box.innerHTML = "";
+
+    data.daily.time.forEach(function(date, i) {
+      const day = document.createElement("div");
+      day.className = "day";
+
+      const dateText = new Date(date + "T12:00:00")
+        .toLocaleDateString("en-IN", {
+          weekday: "short",
+          day: "numeric",
+          month: "short"
+        });
+
+      day.textContent =
+        dateText + "\n" +
+        "Max: " + data.daily.temperature_2m_max[i] + "°C\n" +
+        "Min: " + data.daily.temperature_2m_min[i] + "°C\n" +
+        "Rain: " + data.daily.precipitation_sum[i] + " mm\n" +
+        "Rain chance: " +
+        (data.daily.precipitation_probability_max[i] ?? "--") + "%";
+
+      box.appendChild(day);
+    });
+
+    const rain = data.daily.precipitation_sum.reduce(
+      function(total, value) { return total + value; }, 0
+    );
+
+    let alertMessage = "Seven-day rainfall: " + rain.toFixed(1) + " mm. ";
+
+    if (rain < 10) {
+      alertMessage += "Low rainfall forecast. Monitor irrigation.";
+    } else if (rain > 100) {
+      alertMessage += "High rainfall forecast. Check field drainage.";
+    } else {
+      alertMessage += "Monitor your field and rainfall regularly.";
+    }
+
+    showResult("weatherAlerts", alertMessage);
+    loading.textContent = "Weather loaded successfully.";
+
+  } catch (error) {
+    loading.textContent = error.message;
+  }
 }
 
-// REAL WEATHER USING OPEN-METEO
-async function getWeather(){
-  const place=document.getElementById("place").value.trim();
-  if(!place){alert("Please enter a village or city.");return;}
-  await weatherForPlace(place);
+function weatherDescription(code) {
+  if (code === 0) return "Clear sky";
+  if ([1, 2, 3].includes(code)) return "Cloudy";
+  if ([45, 48].includes(code)) return "Fog";
+  if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return "Rain";
+  if ([95, 96, 99].includes(code)) return "Thunderstorm";
+  return "Variable weather";
 }
 
-async function weatherForPlace(place){
-  const loading=document.getElementById("weatherLoading");
-  const daysBox=document.getElementById("weatherDays");
-  loading.textContent="Searching location and loading forecast...";
-  daysBox.innerHTML="";
-  document.getElementById("weatherAlerts").style.display="none";
-  try{
-    const geoURL="https://geocoding-api.open-meteo.com/v1/search?name="+encodeURICompo
+// GPS LOCATION
+function useGPS() {
+  if (!navigator.geolocation) {
+    alert("Location is not supported.");
+    return;
+  }
+
+  document.getElementById("weatherLoading").textContent =
+    "Requesting location permission...";
+
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      loadForecast(
+        position.coords.latitude,
+        position.coords.longitude,
+        "Your current location"
+      );
+    },
+    function() {
+      document.getElementById("weatherLoading").textContent =
+        "Location permission denied. Enter your city instead.";
+    },
+    { enableHighAccuracy: true, timeout: 15000 }
+  );
+}
+
+// WATER RISK
+function checkWater() {
+  const moistureText = getValue("soilMoisture");
+  const rainText = getValue("expectedRain");
+  const waterText = getValue("availableWater");
+  const areaText = getValue("waterArea");
+
+  if ([moistureText, rainText, waterText, areaText].some(v => v === "")) {
+    alert("Complete all water fields.");
+    return;
+  }
+
+  const moisture = Number(moistureText);
+  const rain = Number(rainText);
+  const water = Number(waterText);
+  const area = Number(areaText);
+
+  if (!Number.isFinite(moisture) || moisture < 0 || moisture > 100 ||
+      !Number.isFinite(rain) || rain < 0 ||
+      !Number.isFinite(water) || water < 0 ||
+      !Number.isFinite(area) || area <= 0) {
+    alert("Enter valid values. Soil moisture must be 0–100%.");
+    return;
+  }
+
+  let risk = 0;
+
+  if (moisture < 20) risk += 45;
+  else if (moisture < 40) risk += 25;
+  else if (moisture < 60) risk += 10;
+
+  if (rain < 5) risk += 25;
+  else if (rain < 20) risk += 10;
+
+  if (water === 0) risk += 25;
+  else if (water < 1000 * area) risk += 15;
+
+  risk = Math.min(risk, 95);
+
+  const level = risk >= 65 ? "High" :
+                risk >= 35 ? "Moderate" : "Low";
+
+  document.getElementById("dashWater").textContent = level;
+
+  showResult(
+    "waterResult",
+    "Estimated water risk: " + level +
+    "\nRisk score: " + risk + "/100" +
+    "\nSoil moisture: " + moisture + "%" +
+    "\nRainfall expected: " + rain + " mm" +
+    "\nWater available: " + water + " litres" +
+    "\nFarm area: " + area + " acres" +
+    "\n\nMonitor soil moisture and field conditions. This is a screening estimate, not a measured drought forecast."
+  );
+}
+
+// CROP PREDICTION
+function predictCrop() {
+  const crop = getValue("crop");
+  const area = getNumber("area");
+  const previousText = getValue("previousYield");
+
+  if (!crop || !area || area <= 0 || previousText === "") {
+    alert("Enter crop, farm area and previous yield.");
+    return;
+  }
+
+  const previous = Number(previousText);
+
+  if (!Number.isFinite(previous) || previous < 0) {
+    alert("Enter a valid previous yield.");
+    return;
+  }
+
+  const benchmark = {
+    "Soybean": 7,
+    "Cotton": 8,
+    "Wheat": 12,
+    "Maize": 15,
+    "Rice": 15,
+    "Pigeon pea": 5,
+    "Chickpea": 7,
+    "Groundnut": 8,
+    "Onion": 100
+  };
+
+  let factor = 1;
+
+  const condition = getValue("cropCondition");
+  const water = getValue("cropWater");
+  const fertilizer = getValue("fertilizer");
+  const rainfall = getValue("rainCondition");
+
+  if (condition === "good") factor *= 1.1;
+  if (condition === "poor") factor *= 0.75;
+
+  if (water === "medium") factor *= 0.85;
+  if (water === "poor") factor *= 0.65;
+
+  if (fertilizer === "good") factor *= 1.05;
+  if (fertilizer === "poor") factor *= 0.85;
+
+  if (rainfall === "low") factor *= 0.8;
+  if (rainfall === "high") factor *= 0.85;
+
+  const base = previous > 0
+    ? previous * 0.6 + benchmark[crop] * 0.4
+    : benchmark[crop];
+
+  const perAcre = base * factor;
+  const total = perAcre * area;
+
+  showResult(
+    "predictionResult",
+    "Crop: " + crop +
+    "\nArea: " + area + " acres" +
+    "\nEstimated yield per acre: " + perAcre.toFixed(2) + " quintals" +
+    "\nEstimated total yield: " + total.toFixed(2) + " quintals" +
+    "\nIllustrative range: " + (total * 0.8).toFixed(2) +
+    " to " + (total * 1.2).toFixed(2) + " quintals" +
+    "\n\nThis is a simplified planning estimate, not a validated crop prediction."
+  );
+
+  document.getElementById("dashYield").textContent =
+    total.toFixed(1) + " q";
+}
+
+// HARVEST PLANNER
+function calculateHarvest() {
+  const date = getValue("sowingDate");
+  const days = Number(getValue("harvestCrop"));
+
+  if (!date) {
+    alert("Select your sowing date.");
+    return;
+  }
+
+  if (!Number.isFinite(days) || days <= 0) {
+    alert("Select a valid crop duration.");
+    return;
+  }
+
+  const result = new Date(date + "T12:00:00");
+  result.setDate(result.getDate() + days);
+
+  const formatted = result.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  showResult(
+    "harvestResult",
+    "Estimated harvest date: " + formatted +
+    "\nEstimated growing duration: " + days + " days." +
+    "\nConfirm actual crop maturity before harvesting."
+  );
+
+  document.getElementById("dashHarvest").textContent =
+    result.toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short"
+    });
+}
+
+// CROP HEALTH
+function checkHealth() {
+  const crop = getValue("healthCrop");
+  const symptom = getValue("symptom");
+
+  if (!crop) {
+    alert("Enter the crop name.");
+    return;
+  }
+
+  const advice = {
+    yellow: "Yellow leaves may be associated with nutrient deficiency, excess water, drought or disease. Check drainage and consider soil testing.",
+    spots: "Leaf spots can have different causes. Inspect both leaf surfaces and seek local expert diagnosis.",
+    wilting: "Check soil moisture, drainage and roots. Both drought and root damage can cause wilting.",
+    holes: "Inspect leaves for insects or larvae. Identify the pest before choosing a treatment.",
+    white: "White powder may be associated with powdery mildew or other problems. Seek crop-specific advice.",
+    stunted: "Check water, nutrients, root health and pest damage.",
+    root: "Check for root rot, waterlogging, compaction or insect damage."
+  };
+
+  showResult(
+    "healthResult",
+    "Crop: " + crop + "\nGuidance: " + advice[symptom] +
+    "\n\nConsult an agricultural expert for diagnosis and treatment."
+  );
+}
+
+// SOIL GUIDANCE
+function soilAdvice() {
+  const soil = getValue("soilGuide");
+
+  const advice = {
+    black: "Black soil often retains moisture. Monitor drainage and avoid working it when excessively wet.",
+    red: "Red soil may benefit from appropriate organic matter management and soil testing.",
+    alluvial: "Alluvial soil can support many crops. Test nutrients and maintain balanced fertilizer management.",
+    sandy: "Sandy soil drains quickly. Manage irrigation carefully and improve organic matter.",
+    clay: "Clay soil can retain water. Monitor drainage and avoid compaction.",
+    loamy: "Loamy soil often offers balanced drainage and moisture retention. Maintain organic matter."
+  };
+
+  showResult(
+    "soilResult",
+    advice[soil] +
+    "\n\nGet a soil test before deciding fertilizer requirements."
+  );
+}
+
+// SET DEFAULT SOWING DATE
+document.addEventListener("DOMContentLoaded", function() {
+  const dateInput = document.getElementById("sowingDate");
+
+  if (dateInput && !dateInput.value) {
+    dateInput.value = new Date().toISOString().slice(0, 10);
+  }
+});
+
+</script>
