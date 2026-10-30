@@ -1,460 +1,863 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HarvestAlert - Smart Farming Assistant</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HarvestAlert | Smart Farming</title>
+  <meta name="description" content="Smart farming tools for weather, soil health, crop planning and harvest management.">
 
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f3f8f1;color:#243326}
-header{background:#176b38;color:white;padding:22px;text-align:center}
-header h1{font-size:28px}
-header p{margin-top:8px}
-nav{display:flex;flex-wrap:wrap;justify-content:center;background:#104d2a}
-nav button{background:transparent;color:white;border:0;padding:14px;cursor:pointer}
-nav button:hover{background:#25834a}
-main{max-width:1100px;margin:auto;padding:20px}
-.page{display:none}
-.page.active{display:block}
-h2{color:#176b38;margin-bottom:15px}
-h3{margin:15px 0 8px}
-.card{background:white;padding:20px;margin:15px 0;border-radius:12px;box-shadow:0 2px 9px #0001}
-input,select{width:100%;padding:12px;margin:7px 0 14px;border:1px solid #bbb;border-radius:7px}
-.action{background:#19763d;color:white;padding:12px 18px;border:0;border-radius:7px;cursor:pointer;margin:5px 4px 5px 0}
-.action:hover{background:#10552b}
-.result{background:#e7f5e9;padding:14px;margin-top:12px;border-radius:8px;line-height:1.6}
-small{color:#555}
-footer{text-align:center;padding:20px;background:#104d2a;color:white;margin-top:30px}
-a{color:#176b38}
-</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #176b45;
+      --dark: #123b2b;
+      --light: #f3f8f3;
+      --white: #ffffff;
+      --text: #26352c;
+      --muted: #718078;
+      --border: #e2ebe4;
+      --radius: 18px;
+      --shadow: 0 8px 28px rgba(20, 70, 45, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--light);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.2;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .container {
+      width: min(1150px, 92%);
+      margin: auto;
+    }
+
+    .navbar {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      min-height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 25px;
+      font-weight: 800;
+      color: var(--green);
+    }
+
+    .logo span {
+      color: #e3a52d;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links button {
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .nav-links button:hover,
+    .nav-links button.active {
+      background: #e8f3eb;
+      color: var(--green);
+    }
+
+    .hero {
+      min-height: 390px;
+      display: flex;
+      align-items: center;
+      color: white;
+      background:
+        linear-gradient(90deg, rgba(8, 40, 25, .88), rgba(8, 40, 25, .2)),
+        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600') center/cover;
+      border-radius: 0 0 24px 24px;
+    }
+
+    .hero-content {
+      max-width: 620px;
+      padding: 55px 0;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 62px);
+      margin: 15px 0;
+    }
+
+    .hero p {
+      font-size: 17px;
+      max-width: 520px;
+      color: #e6f1e9;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: #e6f4e9;
+      color: var(--green);
+      padding: 6px 12px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .hero .eyebrow {
+      background: rgba(255,255,255,.18);
+      color: white;
+    }
+
+    .btn {
+      display: inline-block;
+      border: 0;
+      border-radius: 10px;
+      background: var(--green);
+      color: white;
+      padding: 12px 20px;
+      font-weight: 700;
+      margin-top: 18px;
+    }
+
+    .btn:hover {
+      background: var(--dark);
+    }
+
+    .btn-light {
+      background: white;
+      color: var(--green);
+    }
+
+    .section {
+      padding: 55px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 25px;
+    }
+
+    .section-heading h2 {
+      font-size: 30px;
+      margin: 10px 0;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 12px 0 8px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: #e8f3eb;
+      font-size: 24px;
+    }
+
+    .tool-page {
+      display: none;
+      min-height: 65vh;
+    }
+
+    .tool-page.active {
+      display: block;
+    }
+
+    .form-group {
+      margin: 15px 0;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: white;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--green);
+    }
+
+    .result {
+      margin-top: 18px;
+      padding: 15px;
+      background: #e8f3eb;
+      border-radius: 12px;
+      display: none;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .weather-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .weather-day {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .links-grid a {
+      display: block;
+      padding: 16px;
+      background: white;
+      color: var(--green);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-weight: 700;
+    }
+
+    .links-grid a:hover {
+      background: #e8f3eb;
+    }
+
+    footer {
+      background: var(--dark);
+      color: white;
+      padding: 30px 0;
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    footer p {
+      color: #c5d8cc;
+      font-size: 14px;
+    }
+
+    @media (max-width: 760px) {
+      .nav-inner {
+        padding: 12px 0;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 5px;
+      }
+
+      .nav-links button {
+        white-space: nowrap;
+      }
+
+      .grid,
+      .photo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: 340px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-<h1>🌾 HarvestAlert</h1>
-<p>Your Smart Farming Assistant</p>
-</header>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="logo">Harvest<span>Alert</span></div>
 
-<nav>
-<button data-page="home">Home</button>
-<button data-page="weather">Weather</button>
-<button data-page="water">Water Risk</button>
-<button data-page="crops">Crop Planner</button>
-<button data-page="harvest">Harvest Calculator</button>
-<button data-page="health">Crop Health</button>
-<button data-page="soil">Soil Health</button>
-<button data-page="markets">Market & Schemes</button>
-</nav>
+      <nav class="nav-links">
+        <button class="active" data-page="home">Home</button>
+        <button data-page="weather">Weather</button>
+        <button data-page="crops">Crop Planner</button>
+        <button data-page="soil">Soil Health</button>
+        <button data-page="harvest">Harvest Calculator</button>
+        <button data-page="health">Crop Health</button>
+        <button data-page="links">Farmer Links</button>
+      </nav>
+    </div>
+  </header>
 
-<main>
+  <main>
 
-<section id="home" class="page active">
-<div class="card">
-<h2>Welcome to HarvestAlert 🌱</h2>
-<p>HarvestAlert helps farmers make better farming decisions using weather information, crop planning, soil information and useful agricultural resources.</p>
-</div>
-<div class="card">
-<h2>Our Features</h2>
-<p>🌤️ Weather information</p>
-<p>💧 Water risk checker</p>
-<p>🌱 Crop planner</p>
-<p>📅 Harvest date calculator</p>
-<p>🩺 Crop health guidance</p>
-<p>🌍 Soil Health Checker</p>
-</div>
-</section>
+    <!-- HOME PAGE -->
+    <section id="home" class="tool-page active">
+      <div class="hero">
+        <div class="container">
+          <div class="hero-content">
+            <span class="eyebrow">SMART FARMING PLATFORM</span>
+            <h1>Grow Smarter.<br>Harvest Better.</h1>
+            <p>
+              Simple farming tools to help farmers understand weather,
+              plan crops, check soil health and manage harvests.
+            </p>
+            <button class="btn btn-light" data-page="weather">
+              Check Weather
+            </button>
+          </div>
+        </div>
+      </div>
 
-<section id="weather" class="page">
-<div class="card">
-<h2>🌤️ Weather Information</h2>
-<label>Enter city or village</label>
-<input id="city" placeholder="Example: Chhatrapati Sambhajinagar">
-<button class="action" id="getWeather">Get Weather</button>
-<div id="weatherResult" class="result">Enter your location to check weather.</div>
-</div>
-</section>
+      <div class="container section">
+        <div class="section-heading">
+          <span class="eyebrow">OUR TOOLS</span>
+          <h2>Everything for smarter farming</h2>
+          <p>Explore useful tools for your farming decisions.</p>
+        </div>
 
-<section id="water" class="page">
-<div class="card">
-<h2>💧 Water Risk Checker</h2>
-<label>Expected rainfall (mm)</label>
-<input type="number" id="rainfall" placeholder="Enter rainfall">
-<label>Temperature (°C)</label>
-<input type="number" id="temperature" placeholder="Enter temperature">
-<button class="action" id="checkWater">Check Water Risk</button>
-<div id="waterResult" class="result">Enter details to check water risk.</div>
-</div>
-</section>
+        <div class="grid">
+          <div class="card">
+            <div class="card-icon">🌦️</div>
+            <h3>Weather Forecast</h3>
+            <p>Check current weather and a seven-day forecast.</p>
+            <button class="btn" data-page="weather">Explore</button>
+          </div>
 
-<section id="crops" class="page">
-<div class="card">
-<h2>🌱 Crop Planner</h2>
-<label>Select season</label>
-<select id="season">
-<option value="Kharif">Kharif (Monsoon)</option>
-<option value="Rabi">Rabi (Winter)</option>
-<option value="Summer">Summer</option>
-</select>
-<label>Select soil type</label>
-<select id="cropSoil">
-<option>Black soil</option>
-<option>Red soil</option>
-<option>Sandy soil</option>
-<option>Loamy soil</option>
-</select>
-<button class="action" id="planCrop">Suggest Crops</button>
-<div id="cropResult" class="result">Choose your season and soil type.</div>
-</div>
-</section>
+          <div class="card">
+            <div class="card-icon">🌱</div>
+            <h3>Crop Planner</h3>
+            <p>Explore general crop suggestions by season.</p>
+            <button class="btn" data-page="crops">Explore</button>
+          </div>
 
-<section id="harvest" class="page">
-<div class="card">
-<h2>📅 Harvest Date Calculator</h2>
-<label>Sowing date</label>
-<input type="date" id="sowingDate">
-<label>Crop growing duration (days)</label>
-<input type="number" id="duration" placeholder="Example: 120">
-<button class="action" id="calculateHarvest">Calculate Harvest Date</button>
-<div id="harvestResult" class="result"></div>
-</div>
-</section>
+          <div class="card">
+            <div class="card-icon">🧪</div>
+            <h3>Soil Health</h3>
+            <p>Get a basic screening of soil nutrient values.</p>
+            <button class="btn" data-page="soil">Explore</button>
+          </div>
 
-<section id="health" class="page">
-<div class="card">
-<h2>🩺 Crop Health Guidance</h2>
-<label>Select observed symptom</label>
-<select id="symptom">
-<option value="yellow">Yellow leaves</option>
-<option value="spots">Brown or black leaf spots</option>
-<option value="wilting">Wilting plants</option>
-<option value="holes">Holes in leaves</option>
-<option value="stunted">Slow plant growth</option>
-</select>
-<button class="action" id="checkHealth">Get Guidance</button>
-<div id="healthResult" class="result"></div>
-</div>
-</section>
+          <div class="card">
+            <div class="card-icon">📅</div>
+            <h3>Harvest Calculator</h3>
+            <p>Estimate a crop's harvest date.</p>
+            <button class="btn" data-page="harvest">Explore</button>
+          </div>
 
-<section id="soil" class="page">
-<div class="card">
-<h2>🌍 Soil Health Checker</h2>
-<p>Enter the values from your soil test report.</p>
+          <div class="card">
+            <div class="card-icon">🍃</div>
+            <h3>Crop Health</h3>
+            <p>Explore basic guidance for common crop symptoms.</p>
+            <button class="btn" data-page="health">Explore</button>
+          </div>
 
-<label>Soil pH (0–14)</label>
-<input type="number" id="soilPH" min="0" max="14" step="0.1" placeholder="Example: 7.2">
+          <div class="card">
+            <div class="card-icon">🔗</div>
+            <h3>Farmer Resources</h3>
+            <p>Find useful agriculture websites and services.</p>
+            <button class="btn" data-page="links">Explore</button>
+          </div>
+        </div>
+      </div>
 
-<label>Nitrogen (N) kg/ha</label>
-<input type="number" id="nitrogen" min="0" placeholder="Enter nitrogen">
+      <div class="container section">
+        <div class="section-heading">
+          <h2>Farming Inspiration</h2>
+          <p>Healthy fields, better farming and brighter futures.</p>
+        </div>
 
-<label>Phosphorus (P) kg/ha</label>
-<input type="number" id="phosphorus" min="0" placeholder="Enter phosphorus">
+        <div class="photo-grid">
+          <img src="https://images.unsplash.com/photo-1499529112087-3cb3b73cec95?w=600" alt="Green agricultural field">
+          <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=600" alt="Golden crop field">
+          <img src="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600" alt="Fresh vegetables">
+        </div>
+      </div>
+    </section>
 
-<label>Potassium (K) kg/ha</label>
-<input type="number" id="potassium" min="0" placeholder="Enter potassium">
+    <!-- WEATHER PAGE -->
+    <section id="weather" class="tool-page">
+      <div class="container section">
+        <div class="section-heading">
+          <span class="eyebrow">WEATHER TOOL</span>
+          <h2>Weather Forecast</h2>
+          <p>Enter your city or village to check the weather.</p>
+        </div>
 
-<label>Organic Carbon (%) — Optional</label>
-<input type="number" id="organicCarbon" min="0" max="10" step="0.01" placeholder="Example: 0.65">
+        <div class="card">
+          <div class="form-group">
+            <label for="weatherCity">City or village name</label>
+            <input id="weatherCity" type="text" placeholder="Example: Ahilyanagar">
+          </div>
 
-<button class="action" id="soilCheck">Check Soil Health</button>
-<button class="action" id="soilReset" type="button">Clear</button>
+          <button class="btn" id="weatherBtn">Check Weather</button>
 
-<div id="soilResult" class="result">
-Your soil analysis will appear here.
-</div>
-</div>
+          <div id="weatherResult" class="result"></div>
+          <div id="forecast" class="weather-grid"></div>
+        </div>
+      </div>
+    </section>
+    <!-- CROP PLANNER PAGE -->
+    <section id="crops" class="tool-page">
+      <div class="container section">
+        <div class="section-heading">
+          <span class="eyebrow">CROP PLANNER</span>
+          <h2>Choose Your Crop</h2>
+          <p>Explore general crop suggestions by season.</p>
+        </div>
 
-<div class="card">
-<h3>General Soil Care</h3>
-<p>• Add well-decomposed organic manure when appropriate.</p>
-<p>• Avoid excessive fertilizer application.</p>
-<p>• Use soil testing to guide nutrient management.</p>
-<p>• Prevent soil erosion and waterlogging.</p>
-</div>
-</section>
+        <div class="card">
+          <div class="form-group">
+            <label for="cropSeason">Select season</label>
+            <select id="cropSeason">
+              <option value="">Choose a season</option>
+              <option value="kharif">Kharif (Monsoon)</option>
+              <option value="rabi">Rabi (Winter)</option>
+              <option value="zaid">Zaid (Summer)</option>
+            </select>
+          </div>
 
-<section id="markets" class="page">
-<div class="card">
-<h2>🏛️ Agricultural Resources</h2>
-<p><a href="https://agmarknet.gov.in/" target="_blank">Agmarknet – Market prices</a></p>
-<p><a href="https://enam.gov.in/" target="_blank">e-NAM – National Agriculture Market</a></p>
-<p><a href="https://www.msamb.com/" target="_blank">Maharashtra State Agricultural Marketing Board</a></p>
-<p><a href="https://pmkisan.gov.in/" target="_blank">PM-KISAN</a></p>
-<p><a href="https://pmfby.gov.in/" target="_blank">PM Fasal Bima Yojana</a></p>
-<p><a href="https://soilhealth.dac.gov.in/" target="_blank">Soil Health Card</a></p>
-</div>
-</section>
+          <button class="btn" id="cropBtn">Find Crops</button>
+          <div id="cropResult" class="result"></div>
+        </div>
+      </div>
+    </section>
 
-</main>
+    <!-- SOIL HEALTH PAGE -->
+    <section id="soil" class="tool-page">
+      <div class="container section">
+        <div class="section-heading">
+          <span class="eyebrow">SOIL CHECKER</span>
+          <h2>Soil Health Checker</h2>
+          <p>Enter your soil test values for a basic screening.</p>
+        </div>
 
-<footer>
-<p>© 2026 HarvestAlert | Smart Farming Assistant</p>
-</footer>
+        <div class="card">
+          <div class="form-group">
+            <label for="soilPH">Soil pH</label>
+            <input id="soilPH" type="number" step="0.1" min="0" max="14" placeholder="Example: 6.5">
+          </div>
 
-<script>
-// PAGE NAVIGATION
-document.querySelectorAll("nav button").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".page").forEach(page => {
-      page.classList.remove("active");
+          <div class="form-group">
+            <label for="soilN">Nitrogen (kg/ha)</label>
+            <input id="soilN" type="number" min="0" placeholder="Example: 250">
+          </div>
+
+          <div class="form-group">
+            <label for="soilP">Phosphorus (kg/ha)</label>
+            <input id="soilP" type="number" min="0" placeholder="Example: 15">
+          </div>
+
+          <div class="form-group">
+            <label for="soilK">Potassium (kg/ha)</label>
+            <input id="soilK" type="number" min="0" placeholder="Example: 120">
+          </div>
+
+          <div class="form-group">
+            <label for="soilOC">Organic Carbon (%) – optional</label>
+            <input id="soilOC" type="number" step="0.01" min="0" placeholder="Example: 0.6">
+          </div>
+
+          <button class="btn" id="soilBtn">Check Soil</button>
+          <div id="soilResult" class="result"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HARVEST CALCULATOR PAGE -->
+    <section id="harvest" class="tool-page">
+      <div class="container section">
+        <div class="section-heading">
+          <span class="eyebrow">HARVEST PLANNER</span>
+          <h2>Harvest Date Calculator</h2>
+          <p>Estimate when your crop may be ready for harvest.</p>
+        </div>
+
+        <div class="card">
+          <div class="form-group">
+            <label for="sowingDate">Sowing date</label>
+            <input id="sowingDate" type="date">
+          </div>
+
+          <div class="form-group">
+            <label for="cropDays">Crop duration (days)</label>
+            <input id="cropDays" type="number" min="1" placeholder="Example: 120">
+          </div>
+
+          <button class="btn" id="harvestBtn">Calculate Date</button>
+          <div id="harvestResult" class="result"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CROP HEALTH PAGE -->
+    <section id="health" class="tool-page">
+      <div class="container section">
+        <div class="section-heading">
+          <span class="eyebrow">CROP CARE</span>
+          <h2>Crop Health Guide</h2>
+          <p>Select a symptom to see possible causes and basic guidance.</p>
+        </div>
+
+        <div class="card">
+          <div class="form-group">
+            <label for="cropSymptom">Select crop symptom</label>
+            <select id="cropSymptom">
+              <option value="">Choose a symptom</option>
+              <option value="yellow">Yellow leaves</option>
+              <option value="spots">Brown or black spots</option>
+              <option value="wilting">Wilting leaves</option>
+              <option value="holes">Holes in leaves</option>
+              <option value="stunted">Slow plant growth</option>
+            </select>
+          </div>
+
+          <button class="btn" id="healthBtn">Get Guidance</button>
+          <div id="healthResult" class="result"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FARMER LINKS PAGE -->
+    <section id="links" class="tool-page">
+      <div class="container section">
+        <div class="section-heading">
+          <span class="eyebrow">USEFUL RESOURCES</span>
+          <h2>Farmer Resources</h2>
+          <p>Explore agriculture-related websites and government services.</p>
+        </div>
+
+        <div class="links-grid">
+          <a href="https://agmarknet.gov.in/" target="_blank" rel="noopener">Agmarknet ↗</a>
+          <a href="https://www.enam.gov.in/" target="_blank" rel="noopener">e-NAM ↗</a>
+          <a href="https://www.msamb.com/" target="_blank" rel="noopener">MSAMB ↗</a>
+          <a href="https://pmkisan.gov.in/" target="_blank" rel="noopener">PM-KISAN ↗</a>
+          <a href="https://pmfby.gov.in/" target="_blank" rel="noopener">PM Fasal Bima Yojana ↗</a>
+          <a href="https://soilhealth.dac.gov.in/" target="_blank" rel="noopener">Soil Health Card ↗</a>
+          <a href="https://farmer.gov.in/" target="_blank" rel="noopener">Farmer Portal ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="logo" style="color:white;">Harvest<span>Alert</span></div>
+      <p>Smart Farming • Better Decisions • Better Harvests</p>
+      <p>© 2026 HarvestAlert. Educational farming tools.</p>
+    </div>
+  </footer>
+  <script>
+    // PAGE NAVIGATION
+    function showPage(pageId) {
+      document.querySelectorAll('.tool-page').forEach(page => {
+        page.classList.remove('active');
+      });
+
+      document.querySelectorAll('[data-page]').forEach(button => {
+        button.classList.toggle('active', button.dataset.page === pageId);
+      });
+
+      const page = document.getElementById(pageId);
+      if (page) page.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('[data-page]').forEach(button => {
+      button.addEventListener('click', () => {
+        showPage(button.dataset.page);
+      });
     });
 
-    document.getElementById(button.dataset.page).classList.add("active");
-    window.scrollTo(0, 0);
-  });
-});
+    // WEATHER FORECAST
+    const weatherBtn = document.getElementById('weatherBtn');
 
+    weatherBtn.addEventListener('click', async () => {
+      const city = document.getElementById('weatherCity').value.trim();
+      const result = document.getElementById('weatherResult');
+      const forecast = document.getElementById('forecast');
 
-// WEATHER
-document.getElementById("getWeather").addEventListener("click", async () => {
-  const city = document.getElementById("city").value.trim();
-  const result = document.getElementById("weatherResult");
+      result.classList.add('show');
+      forecast.innerHTML = '';
+      result.textContent = 'Loading weather...';
 
-  if (!city) {
-    result.textContent = "Please enter a city or village.";
-    return;
-  }
+      if (!city) {
+        result.textContent = 'Please enter a city or village name.';
+        return;
+      }
 
-  result.textContent = "Loading weather...";
+      try {
+        const geoResponse = await fetch(
+          'https://geocoding-api.open-meteo.com/v1/search?name=' +
+          encodeURIComponent(city) + '&count=1&language=en&format=json'
+        );
 
-  try {
-    const geoResponse = await fetch(
-      "https://geocoding-api.open-meteo.com/v1/search?name=" +
-      encodeURIComponent(city) + "&count=1&language=en&format=json"
-    );
+        if (!geoResponse.ok) throw new Error('Location service unavailable.');
 
-    const geo = await geoResponse.json();
+        const geoData = await geoResponse.json();
 
-    if (!geo.results || !geo.results.length) {
-      throw new Error("Location not found.");
-    }
+        if (!geoData.results || !geoData.results.length) {
+          result.textContent = 'Location not found. Please check the spelling.';
+          return;
+        }
 
-    const place = geo.results[0];
+        const place = geoData.results[0];
 
-    const weatherResponse = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,relative_humidity_2m,precipitation,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=7`
-    );
+        const weatherResponse = await fetch(
+          'https://api.open-meteo.com/v1/forecast?latitude=' +
+          place.latitude + '&longitude=' + place.longitude +
+          '&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m' +
+          '&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max' +
+          '&timezone=auto&forecast_days=7'
+        );
 
-    const data = await weatherResponse.json();
-    const current = data.current;
-    const daily = data.daily;
+        if (!weatherResponse.ok) throw new Error('Weather service unavailable.');
 
-    let forecast = "";
+        const data = await weatherResponse.json();
+        const current = data.current;
 
-    for (let i = 0; i < daily.time.length; i++) {
-      forecast += `<p>${daily.time[i]}: ${daily.temperature_2m_min[i]}°C to ${daily.temperature_2m_max[i]}°C, rain chance ${daily.precipitation_probability_max[i]}%</p>`;
-    }
+        result.innerHTML = `
+          <h3>Weather in ${place.name}, ${place.country || ''}</h3>
+          <p><strong>${current.temperature_2m}°C</strong> — Current temperature</p>
+          <p>Feels like: ${current.apparent_temperature}°C</p>
+          <p>Humidity: ${current.relative_humidity_2m}%</p>
+          <p>Wind speed: ${current.wind_speed_10m} km/h</p>
+          <p>Precipitation: ${current.precipitation} mm</p>
+        `;
 
-    result.innerHTML = `
-      <h3>Weather in ${place.name}</h3>
-      <p>Temperature: ${current.temperature_2m}°C</p>
-      <p>Humidity: ${current.relative_humidity_2m}%</p>
-      <p>Rainfall: ${current.precipitation} mm</p>
-      <p>Wind speed: ${current.wind_speed_10m} km/h</p>
-      <h3>7-Day Forecast</h3>
-      ${forecast}
-    `;
-  } catch (error) {
-    result.textContent = "Unable to get weather. Check your internet and location name.";
-  }
-});
+        for (let i = 0; i < data.daily.time.length; i++) {
+          const day = document.createElement('div');
+          day.className = 'weather-day';
 
+          day.innerHTML = `
+            <strong>${data.daily.time[i]}</strong>
+            <p>🌡️ ${data.daily.temperature_2m_max[i]}°C / ${data.daily.temperature_2m_min[i]}°C</p>
+            <p>🌧️ Rain chance: ${data.daily.precipitation_probability_max[i] ?? 'N/A'}%</p>
+          `;
 
-// WATER RISK CHECKER
-document.getElementById("checkWater").addEventListener("click", () => {
-  const rain = Number(document.getElementById("rainfall").value);
-  const temp = Number(document.getElementById("temperature").value);
-  const result = document.getElementById("waterResult");
+          forecast.appendChild(day);
+        }
 
-  if (
-    document.getElementById("rainfall").value === "" ||
-    document.getElementById("temperature").value === "" ||
-    rain < 0
-  ) {
-    result.textContent = "Enter valid rainfall and temperature values.";
-    return;
-  }
-
-  let advice = "";
-
-  if (rain < 10 && temp > 30) {
-    advice = "High possible water stress. Check soil moisture and irrigation needs.";
-  } else if (rain < 10) {
-    advice = "Low rainfall. Monitor soil moisture and crop condition.";
-  } else if (rain > 100) {
-    advice = "Heavy rainfall. Check drainage and possible waterlogging.";
-  } else {
-    advice = "Moderate rainfall. Monitor field conditions.";
-  }
-
-  result.textContent = advice;
-});
-
-
-// CROP PLANNER
-document.getElementById("planCrop").addEventListener("click", () => {
-  const season = document.getElementById("season").value;
-  const soil = document.getElementById("cropSoil").value;
-  const result = document.getElementById("cropResult");
-
-  const crops = {
-    Kharif: "Soybean, cotton, maize, pigeon pea and rice",
-    Rabi: "Wheat, chickpea, mustard, onion and lentil",
-    Summer: "Green gram, watermelon, cucumber and summer vegetables"
-  };
-
-  result.innerHTML = `
-    <h3>Suggested crops</h3>
-    <p>Season: ${season}</p>
-    <p>Soil: ${soil}</p>
-    <p>${crops[season]}</p>
-    <small>These are general suggestions. Check local rainfall, irrigation, soil test results and agricultural guidance before planting.</small>
-  `;
-});
-
-
-// HARVEST DATE CALCULATOR
-document.getElementById("calculateHarvest").addEventListener("click", () => {
-  const dateValue = document.getElementById("sowingDate").value;
-  const days = Number(document.getElementById("duration").value);
-  const result = document.getElementById("harvestResult");
-
-  if (!dateValue || !Number.isInteger(days) || days <= 0) {
-    result.textContent = "Enter a valid sowing date and growing duration.";
-    return;
-  }
-
-  const date = new Date(dateValue + "T12:00:00");
-  date.setDate(date.getDate() + days);
-
-  result.textContent = "Estimated harvest date: " +
-    date.toLocaleDateString("en-IN", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
+      } catch (error) {
+        result.textContent = 'Unable to load weather. Check your internet connection and try again.';
+      }
     });
-});
 
+    // CROP PLANNER
+    document.getElementById('cropBtn').addEventListener('click', () => {
+      const season = document.getElementById('cropSeason').value;
+      const result = document.getElementById('cropResult');
 
-// CROP HEALTH GUIDANCE
-document.getElementById("checkHealth").addEventListener("click", () => {
-  const symptom = document.getElementById("symptom").value;
-  const result = document.getElementById("healthResult");
+      const crops = {
+        kharif: ['Rice', 'Maize', 'Soybean', 'Cotton', 'Groundnut', 'Millet'],
+        rabi: ['Wheat', 'Chickpea', 'Mustard', 'Peas', 'Barley'],
+        zaid: ['Watermelon', 'Muskmelon', 'Cucumber', 'Pumpkin', 'Summer Moong']
+      };
 
-  const advice = {
-    yellow: "Yellow leaves can be caused by nutrient deficiency, excess water or pests. Check soil moisture and inspect leaves.",
-    spots: "Leaf spots may be caused by fungal or bacterial diseases. Avoid overhead watering and seek local crop-specific diagnosis.",
-    wilting: "Wilting may be caused by drought, waterlogging or root disease. Check soil moisture and roots.",
-    holes: "Holes may indicate insect feeding. Inspect the underside of leaves for pests.",
-    stunted: "Slow growth may be related to nutrient deficiency, poor soil conditions, pests or disease. Consider a soil test."
-  };
+      result.classList.add('show');
 
-  result.textContent = advice[symptom];
-});
+      if (!season) {
+        result.textContent = 'Please select a season.';
+        return;
+      }
 
+      result.innerHTML =
+        '<h3>Suggested crops</h3><p>' +
+        crops[season].join(' • ') +
+        '</p><p>These are general suggestions. Check local climate, water availability and agricultural advice before planting.</p>';
+    });
 
-// SOIL HEALTH CHECKER
-document.getElementById("soilCheck").addEventListener("click", () => {
-  const phInput = document.getElementById("soilPH").value;
-  const nInput = document.getElementById("nitrogen").value;
-  const pInput = document.getElementById("phosphorus").value;
-  const kInput = document.getElementById("potassium").value;
-  const ocInput = document.getElementById("organicCarbon").value;
+    // SOIL HEALTH CHECKER
+    document.getElementById('soilBtn').addEventListener('click', () => {
+      const ph = Number(document.getElementById('soilPH').value);
+      const n = Number(document.getElementById('soilN').value);
+      const p = Number(document.getElementById('soilP').value);
+      const k = Number(document.getElementById('soilK').value);
+      const ocInput = document.getElementById('soilOC').value.trim();
+      const oc = Number(ocInput);
+      const result = document.getElementById('soilResult');
 
-  const result = document.getElementById("soilResult");
+      result.classList.add('show');
 
-  if (
-    phInput === "" || nInput === "" ||
-    pInput === "" || kInput === ""
-  ) {
-    result.textContent = "Please enter pH, Nitrogen, Phosphorus and Potassium values.";
-    return;
-  }
+      if (
+        document.getElementById('soilPH').value === '' ||
+        document.getElementById('soilN').value === '' ||
+        document.getElementById('soilP').value === '' ||
+        document.getElementById('soilK').value === '' ||
+        !Number.isFinite(ph) || !Number.isFinite(n) ||
+        !Number.isFinite(p) || !Number.isFinite(k) ||
+        ph < 0 || ph > 14 || n < 0 || p < 0 || k < 0 ||
+        (ocInput !== '' && (!Number.isFinite(oc) || oc < 0))
+      ) {
+        result.textContent = 'Please enter valid, non-negative soil values. Soil pH must be between 0 and 14.';
+        return;
+      }
 
-  const ph = Number(phInput);
-  const n = Number(nInput);
-  const p = Number(pInput);
-  const k = Number(kInput);
-  const oc = ocInput === "" ? null : Number(ocInput);
+      function level(value, low, medium) {
+        if (value < low) return 'Low';
+        if (value < medium) return 'Medium';
+        return 'High';
+      }
 
-  if (
-    !Number.isFinite(ph) || ph < 0 || ph > 14 ||
-    !Number.isFinite(n) || n < 0 ||
-    !Number.isFinite(p) || p < 0 ||
-    !Number.isFinite(k) || k < 0 ||
-    (oc !== null && (!Number.isFinite(oc) || oc < 0 || oc > 10))
-  ) {
-    result.textContent = "Please enter valid values within the allowed ranges.";
-    return;
-  }
+      let phMessage = 'Near neutral';
+      if (ph < 6.5) phMessage = 'Acidic';
+      else if (ph > 7.5) phMessage = 'Alkaline';
 
-  function nutrientLevel(value, lowLimit, mediumLimit) {
-    if (value < lowLimit) return "Low";
-    if (value < mediumLimit) return "Medium";
-    return "High";
-  }
+      let output = `
+        <h3>Soil Screening Result</h3>
+        <p>Soil pH: ${ph} (${phMessage})</p>
+        <p>Nitrogen: ${level(n, 280, 560)}</p>
+        <p>Phosphorus: ${level(p, 11, 22)}</p>
+        <p>Potassium: ${level(k, 110, 280)}</p>
+      `;
 
-  let phAdvice = "";
+      if (ocInput !== '') {
+        output += `<p>Organic carbon: ${level(oc, 0.5, 0.75)}</p>`;
+      }
 
-  if (ph < 5.5) {
-    phAdvice = "Strongly acidic range";
-  } else if (ph < 6.5) {
-    phAdvice = "Slightly acidic range";
-  } else if (ph <= 7.5) {
-    phAdvice = "Near-neutral range";
-  } else if (ph <= 8.5) {
-    phAdvice = "Alkaline range";
-  } else {
-    phAdvice = "Strongly alkaline range";
-  }
+      output += `
+        <p><strong>Important:</strong> These are approximate screening bands, not certified soil ratings. Laboratory methods and regional standards vary. Get a local soil test before deciding fertilizer quantities.</p>
+      `;
 
-  const nitrogenLevel = nutrientLevel(n, 280, 560);
-  const phosphorusLevel = nutrientLevel(p, 11, 22);
-  const potassiumLevel = nutrientLevel(k, 110, 280);
+      result.innerHTML = output;
+    });
 
-  let html = `
-    <h3>Soil Health Report</h3>
-    <p><strong>Soil pH:</strong> ${ph} — ${phAdvice}</p>
-    <p><strong>Nitrogen:</strong> ${nitrogenLevel}</p>
-    <p><strong>Phosphorus:</strong> ${phosphorusLevel}</p>
-    <p><strong>Potassium:</strong> ${potassiumLevel}</p>
-  `;
+    // HARVEST DATE CALCULATOR
+    document.getElementById('harvestBtn').addEventListener('click', () => {
+      const dateValue = document.getElementById('sowingDate').value;
+      const days = Number(document.getElementById('cropDays').value);
+      const result = document.getElementById('harvestResult');
 
-  if (oc !== null) {
-    let carbonLevel = "High";
+      result.classList.add('show');
 
-    if (oc < 0.5) {
-      carbonLevel = "Low";
-    } else if (oc < 0.75) {
-      carbonLevel = "Medium";
-    }
+      if (!dateValue || !Number.isInteger(days) || days <= 0) {
+        result.textContent = 'Enter a valid sowing date and crop duration in days.';
+        return;
+      }
 
-    html += `<p><strong>Organic Carbon:</strong> ${carbonLevel} (${oc}%)</p>`;
-  }
+      const date = new Date(dateValue + 'T12:00:00');
+      date.setDate(date.getDate() + days);
 
-  html += `
-    <hr>
-    <p><strong>Advice:</strong> Use your soil test report and local agricultural recommendations to plan soil management.</p>
-    <small>Important: These are approximate screening bands, not a certified laboratory diagnosis. Nutrient ratings depend on the soil testing method and local standards. Do not calculate fertilizer doses from this result alone.</small>
-  `;
+      result.innerHTML =
+        '<h3>Estimated Harvest Date</h3><p>' +
+        date.toLocaleDateString('en-IN', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        }) +
+        '</p><p>This is an estimate. Actual harvest timing depends on crop variety and growing conditions.</p>';
+    });
 
-  result.innerHTML = html;
-});
+    // CROP HEALTH GUIDE
+    document.getElementById('healthBtn').addEventListener('click', () => {
+      const symptom = document.getElementById('cropSymptom').value;
+      const result = document.getElementById('healthResult');
 
+      const guidance = {
+        yellow: 'Yellow leaves may be caused by nutrient deficiency, excess water or poor drainage. Check soil moisture and get a soil test.',
+        spots: 'Brown or black spots may be caused by fungal or bacterial diseases. Avoid wetting leaves and seek local crop-protection advice.',
+        wilting: 'Wilting may be caused by water stress, root damage or disease. Check soil moisture and inspect the roots.',
+        holes: 'Holes in leaves may indicate insect feeding. Inspect both sides of leaves for insects or eggs.',
+        stunted: 'Slow growth may be related to poor nutrition, unsuitable soil pH, water stress or pests. Check growing conditions.'
+      };
 
-// SOIL RESET BUTTON
-document.getElementById("soilReset").addEventListener("click", () => {
-  document.getElementById("soilPH").value = "";
-  document.getElementById("nitrogen").value = "";
-  document.getElementById("phosphorus").value = "";
-  document.getElementById("potassium").value = "";
-  document.getElementById("organicCarbon").value = "";
+      result.classList.add('show');
 
-  document.getElementById("soilResult").textContent =
-    "Your soil analysis will appear here.";
-});
+      if (!symptom) {
+        result.textContent = 'Please select a symptom.';
+        return;
+      }
 
-</script>
+      result.innerHTML =
+        '<h3>Possible causes and guidance</h3><p>' +
+        guidance[symptom] +
+        '</p><p>Symptoms alone cannot confirm a diagnosis. Consult a local agricultural expert before applying pesticides or fertilizers.</p>';
+    });
+  </script>
+
 </body>
 </html>
